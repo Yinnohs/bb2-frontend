@@ -1,7 +1,8 @@
+import { ChakraProvider } from '@chakra-ui/provider'
+import { Router } from '../routes'
+
+ChakraProvider
+
 export const App = () => {
-    return (
-        <div>
-            <h1> Hola mundo </h1>
-        </div>
-    )
+    return <Router />
 }
