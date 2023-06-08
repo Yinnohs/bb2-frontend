@@ -22,7 +22,7 @@ export const RegisterPage = () => {
 
     return (
         <Flex
-            h={'90vh'}
+            h={'100%'}
             w={'100%'}
             align={'center'}
             justify={'center'}
