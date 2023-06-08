@@ -29,8 +29,9 @@ export const NavBar = () => {
             position={'sticky'}
             top={0}
             left={0}
-            bg={useColorModeValue('gray.100', 'gray.900')}
+            bg={useColorModeValue('gray.100', 'gray.700')}
             px={4}
+            shadow={'md'}
         >
             <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                 <Box></Box>
