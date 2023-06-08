@@ -1,4 +1,4 @@
-import { useColorModeValue } from '@chakra-ui/color-mode'
+import { useColorModeValue } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 

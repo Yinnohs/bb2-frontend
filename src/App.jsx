@@ -1,7 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/provider'
-import { Router } from '../routes'
-
-ChakraProvider
+import { Router } from './routes'
 
 export const App = () => {
     return <Router />
