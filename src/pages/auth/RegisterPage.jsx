@@ -52,19 +52,25 @@ export const RegisterPage = () => {
                             <Box>
                                 <FormControl id="firstName" isRequired>
                                     <FormLabel>First Name</FormLabel>
-                                    <Input type="text" />
+                                    <Input
+                                        focusBorderColor="purple.600"
+                                        type="text"
+                                    />
                                 </FormControl>
                             </Box>
                             <Box>
                                 <FormControl id="lastName">
                                     <FormLabel>Last Name</FormLabel>
-                                    <Input type="text" />
+                                    <Input
+                                        focusBorderColor="purple.600"
+                                        type="text"
+                                    />
                                 </FormControl>
                             </Box>
                         </HStack>
                         <FormControl id="email" isRequired>
                             <FormLabel>Email address</FormLabel>
-                            <Input type="email" />
+                            <Input focusBorderColor="purple.600" type="email" />
                         </FormControl>
                         <FormControl id="password" isRequired>
                             <FormLabel>Password</FormLabel>
@@ -94,10 +100,10 @@ export const RegisterPage = () => {
                             <Button
                                 loadingText="Submitting"
                                 size="lg"
-                                bg={'green.400'}
+                                bg={'purple.400'}
                                 color={'white'}
                                 _hover={{
-                                    bg: 'green.500',
+                                    bg: 'purple.500',
                                 }}
                             >
                                 Sign up
@@ -107,7 +113,7 @@ export const RegisterPage = () => {
                             <Text align={'center'}>
                                 Already a user?
                                 <Link
-                                    color={'green.400'}
+                                    color={'purple.400'}
                                     onClick={() => navigation('/login')}
                                 >
                                     Login

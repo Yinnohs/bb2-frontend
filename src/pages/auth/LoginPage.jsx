@@ -50,15 +50,15 @@ export const LoginPage = () => {
                                 justify={'space-between'}
                             >
                                 <Checkbox>Remember me</Checkbox>
-                                <Link color={'green.400'}>
+                                <Link color={'purple.400'}>
                                     Forgot password?
                                 </Link>
                             </Stack>
                             <Button
-                                bg={'green.400'}
+                                bg={'purple.400'}
                                 color={'white'}
                                 _hover={{
-                                    bg: 'green.500',
+                                    bg: 'purple.500',
                                 }}
                             >
                                 Sign in

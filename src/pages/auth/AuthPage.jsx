@@ -6,7 +6,6 @@ import {
     Text,
     Button,
     Image,
-    IconButton,
     createIcon,
     useColorModeValue,
 } from '@chakra-ui/react'
@@ -46,15 +45,15 @@ export const AuthPage = () => {
                                 position: 'absolute',
                                 bottom: 1,
                                 left: 0,
-                                bg: 'green.400',
+                                bg: 'purple.400',
                                 zIndex: -1,
                             }}
                         >
-                            Write once,
+                            Andromeda Shop
                         </Text>
                         <br />
-                        <Text as={'span'} color={'green.400'}>
-                            use everywhere!
+                        <Text as={'span'} color={'purple.400'}>
+                            Best in the galaxy!
                         </Text>
                     </Heading>
                     <Text color={'gray.500'}>
@@ -74,8 +73,8 @@ export const AuthPage = () => {
                             fontWeight={'normal'}
                             px={6}
                             colorScheme={'red'}
-                            bg={'green.400'}
-                            _hover={{ bg: 'green.500' }}
+                            bg={'purple.400'}
+                            _hover={{ bg: 'purple.500' }}
                         >
                             Login
                         </Button>
@@ -107,7 +106,7 @@ export const AuthPage = () => {
                         top={'-20%'}
                         left={0}
                         zIndex={-1}
-                        color={useColorModeValue('green.50', 'green.400')}
+                        color={useColorModeValue('purple.100', 'purple.400')}
                     />
                     <Box
                         position={'relative'}
@@ -117,27 +116,13 @@ export const AuthPage = () => {
                         width={'full'}
                         overflow={'hidden'}
                     >
-                        <IconButton
-                            aria-label={'Play Button'}
-                            variant={'ghost'}
-                            _hover={{ bg: 'transparent' }}
-                            icon={<PlayIcon w={12} h={12} />}
-                            size={'lg'}
-                            color={'white'}
-                            position={'absolute'}
-                            left={'50%'}
-                            top={'50%'}
-                            transform={'translateX(-50%) translateY(-50%)'}
-                        />
                         <Image
                             alt={'Hero Image'}
                             fit={'cover'}
                             align={'center'}
                             w={'100%'}
                             h={'100%'}
-                            src={
-                                'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80'
-                            }
+                            src={'/andromeda.gif'}
                         />
                     </Box>
                 </Flex>
