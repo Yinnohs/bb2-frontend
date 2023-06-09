@@ -5,8 +5,9 @@ import {
     Text,
     useColorModeValue,
 } from '@chakra-ui/react'
-import { ArrowBackIcon, ArrowLeftIcon, ArrowUpIcon } from '@chakra-ui/icons'
+import { ArrowLeftIcon, ArrowUpIcon } from '@chakra-ui/icons'
 import { SocialButton } from '../buttons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const Footer = () => {
     return (
@@ -25,8 +26,8 @@ export const Footer = () => {
             >
                 <Text>© 2023 Yinnohs. All rights reserved</Text>
                 <Stack direction={'row'} spacing={6}>
-                    <SocialButton label={'Twitter'} href={'#'}>
-                        <ArrowBackIcon />
+                    <SocialButton label={'Github'} href={'#'}>
+                        <FontAwesomeIcon size="lg" icon={'github'} />
                     </SocialButton>
                     <SocialButton label={'YouTube'} href={'#'}>
                         <ArrowLeftIcon />

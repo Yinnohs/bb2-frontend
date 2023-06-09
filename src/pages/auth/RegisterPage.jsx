@@ -16,24 +16,28 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { useNavigate } from 'react-router-dom'
 
 export const RegisterPage = () => {
     const [showPassword, setShowPassword] = useState(false)
-
+    const navigation = useNavigate()
     return (
         <Flex
-            h={'100%'}
+            h={'100vh'}
             w={'100%'}
             align={'center'}
             justify={'center'}
-            bg={useColorModeValue('gray.200', 'gray.800')}
+            bg={useColorModeValue('gray.50', 'gray.800')}
         >
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={0} px={6}>
                 <Stack align={'center'}>
                     <Heading fontSize={'4xl'} textAlign={'center'}>
                         Register 🚀
                     </Heading>
-                    <Text fontSize={'lg'}>
+                    <Text
+                        fontSize={'lg'}
+                        color={useColorModeValue('gray.500', 'gray.400')}
+                    >
                         To buy the most exiting items in the galaxy
                     </Text>
                 </Stack>
@@ -90,10 +94,10 @@ export const RegisterPage = () => {
                             <Button
                                 loadingText="Submitting"
                                 size="lg"
-                                bg={'blue.400'}
+                                bg={'green.400'}
                                 color={'white'}
                                 _hover={{
-                                    bg: 'blue.500',
+                                    bg: 'green.500',
                                 }}
                             >
                                 Sign up
@@ -101,8 +105,13 @@ export const RegisterPage = () => {
                         </Stack>
                         <Stack pt={6}>
                             <Text align={'center'}>
-                                Already a user?{' '}
-                                <Link color={'blue.400'}>Login</Link>
+                                Already a user?
+                                <Link
+                                    color={'green.400'}
+                                    onClick={() => navigation('/login')}
+                                >
+                                    Login
+                                </Link>
                             </Text>
                         </Stack>
                     </Stack>

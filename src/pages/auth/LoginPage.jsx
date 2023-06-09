@@ -23,10 +23,9 @@ export const LoginPage = () => {
         >
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                 <Stack align={'center'}>
-                    <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+                    <Heading fontSize={'4xl'}>Sing in</Heading>
                     <Text fontSize={'lg'} color={'gray.600'}>
-                        to enjoy all of our cool{' '}
-                        <Link color={'blue.400'}>features</Link> ✌️
+                        To purchase items across the galaxy 🌌
                     </Text>
                 </Stack>
                 <Box
@@ -51,13 +50,15 @@ export const LoginPage = () => {
                                 justify={'space-between'}
                             >
                                 <Checkbox>Remember me</Checkbox>
-                                <Link color={'blue.400'}>Forgot password?</Link>
+                                <Link color={'green.400'}>
+                                    Forgot password?
+                                </Link>
                             </Stack>
                             <Button
-                                bg={'blue.400'}
+                                bg={'green.400'}
                                 color={'white'}
                                 _hover={{
-                                    bg: 'blue.500',
+                                    bg: 'green.500',
                                 }}
                             >
                                 Sign in
