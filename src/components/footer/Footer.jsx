@@ -5,14 +5,13 @@ import {
     Text,
     useColorModeValue,
 } from '@chakra-ui/react'
-import { ArrowLeftIcon, ArrowUpIcon } from '@chakra-ui/icons'
-import { SocialButton } from '../buttons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const Footer = () => {
     return (
         <Box
-            bg={useColorModeValue('gray.50', 'gray.900')}
+            borderTop={'1px'}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
+            bg={useColorModeValue('white', 'gray.800')}
             color={useColorModeValue('gray.700', 'gray.200')}
         >
             <Container
@@ -21,21 +20,10 @@ export const Footer = () => {
                 py={4}
                 direction={{ base: 'column', md: 'row' }}
                 spacing={4}
-                justify={{ base: 'center', md: 'space-between' }}
+                justify={{ base: 'center', md: 'center' }}
                 align={{ base: 'center', md: 'center' }}
             >
                 <Text>© 2023 Yinnohs. All rights reserved</Text>
-                <Stack direction={'row'} spacing={6}>
-                    <SocialButton label={'Github'} href={'#'}>
-                        <FontAwesomeIcon size="lg" icon={'github'} />
-                    </SocialButton>
-                    <SocialButton label={'YouTube'} href={'#'}>
-                        <ArrowLeftIcon />
-                    </SocialButton>
-                    <SocialButton label={'Instagram'} href={'#'}>
-                        <ArrowUpIcon />
-                    </SocialButton>
-                </Stack>
             </Container>
         </Box>
     )
