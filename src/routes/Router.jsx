@@ -1,7 +1,13 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from '../components/layout'
-import { AuthPage, LoginPage, NotFoundPage, RegisterPage } from '../pages'
-import { ItemListPage } from '../pages/item/ItemListPage'
+import {
+    AuthPage,
+    LoginPage,
+    NotFoundPage,
+    RegisterPage,
+    ItemListPage,
+    ItemDetails,
+} from '../pages'
 
 export const Router = () => {
     return (
@@ -13,6 +19,10 @@ export const Router = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route element={<Layout />}>
                     <Route path="/items" element={<ItemListPage />} />
+                    <Route
+                        path="/items/details/:id"
+                        element={<ItemDetails />}
+                    />
                     <Route
                         path="*"
                         element={<Navigate to="/error" replace />}
