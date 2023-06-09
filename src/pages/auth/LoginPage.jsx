@@ -1,10 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
     Flex,
     Box,
     FormControl,
     FormLabel,
     Input,
-    Checkbox,
     Stack,
     Link,
     Button,
@@ -12,8 +12,10 @@ import {
     Text,
     useColorModeValue,
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 
 export const LoginPage = () => {
+    const navigation = useNavigate()
     return (
         <Flex
             minH={'100vh'}
@@ -49,10 +51,15 @@ export const LoginPage = () => {
                                 align={'start'}
                                 justify={'space-between'}
                             >
-                                <Checkbox>Remember me</Checkbox>
-                                <Link color={'purple.400'}>
-                                    Forgot password?
-                                </Link>
+                                <Text color={useColorModeValue('gray.500')}>
+                                    don't have an account?{' '}
+                                    <Link
+                                        color={'purple.400'}
+                                        onClick={() => navigation('/register')}
+                                    >
+                                        Register
+                                    </Link>
+                                </Text>
                             </Stack>
                             <Button
                                 bg={'purple.400'}

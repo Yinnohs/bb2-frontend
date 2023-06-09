@@ -6,6 +6,7 @@ import {
     Text,
     Stack,
     Image,
+    Badge,
 } from '@chakra-ui/react'
 
 import PropTypes from 'prop-types'
@@ -18,7 +19,7 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                 p={6}
                 maxW={'330px'}
                 w={'full'}
-                bg={useColorModeValue('white', 'gray.800')}
+                bg={useColorModeValue('white', 'blackAlpha.500')}
                 boxShadow={'2xl'}
                 rounded={'lg'}
                 pos={'relative'}
@@ -26,7 +27,7 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
             >
                 <Box
                     rounded={'lg'}
-                    mt={-12}
+                    mt={-1}
                     pos={'relative'}
                     height={'230px'}
                     _after={{
@@ -72,18 +73,29 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                         {item?.description}A brief Description
                     </Heading>
                     <Stack direction={'row'} align={'center'}>
-                        <Text fontWeight={800} fontSize={'sm'}>
-                            {item?.status}
-                            Active
-                        </Text>
                         <Text
-                            color={'gray.500'}
+                            color={'purple.400'}
                             fontSize={'sm'}
+                            fontWeight={'bold'}
                             textTransform={'uppercase'}
                         >
-                            {`${item?.creator?.name} ${item?.creator?.surname}`}
+                            {/* {`${item?.creator?.name} ${item?.creator?.surname}`} */}
                             Jose I Soto
                         </Text>
+                        <Badge
+                            fontSize={'sm'}
+                            borderRadius={5}
+                            textColor={'purple.400'}
+                            backgroundColor={useColorModeValue(
+                                'white',
+                                'gray.800'
+                            )}
+                            border={'1px'}
+                            borderColor={'purple.400'}
+                        >
+                            {item?.status}
+                            Active
+                        </Badge>
                     </Stack>
                     <Stack direction={'row'} align={'center'}>
                         <Text fontWeight={800} fontSize={'xl'}>
