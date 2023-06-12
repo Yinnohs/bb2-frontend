@@ -1,7 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState= {
-    items:[],
+    items:[{
+        item_id:1,
+        item_code: 1234,
+        description: "boilerplate item",
+        price: 12.2,
+        item_state: "ACTIVE",
+        creator:{
+                user_id:1,
+                name: "sexy admin",
+                surname: "really sexy admin",
+                email: "admin@admin.com",
+            },
+        suppliers:[],
+        price_reductions: []
+    }],
     status:'idle',
     error: null
 }
@@ -14,41 +28,47 @@ const itemSlice = createSlice({
             reducer(state, action){
                 state.items.push(action.payload)
             },
-            prepare(itemCode, description, price, userId){
+            prepare(data, suppliers=[], priceReductions= [] ){
                 return{
                     payload:{
-                        itemcode: itemCode,
-                        description: description,
-                        price: price,
-                        creator_id: userId
+                        item_id: data.item_id,
+                        item_code: data.item_code,
+                        description: data.description,
+                        price: data.price,
+                        item_state: "ACTIVE",
+                        creator: data.creator,
+                        suppliers,
+                        price_reductions: priceReductions,
                     }
                 }
             }   
         },
 
-        deleteItem(state, action){
+        itemDeleted: (state, action)=>{
             const {itemId} = action.payload
             state.items = state.items.filter((item)=> item.id !== itemId)
         },
 
-        addNewSupplier(state, action){
+        itemSupplierAdded: (state, action)=>{
             const {newSuppliers, itemId} = action.payload
             const currentItem = state.items.find((item)=> item.id === itemId)
             if(currentItem){
-                currentItem.suppliers.push(... newSuppliers);
+                currentItem.suppliers.push(...newSuppliers);
             }
         },
 
-        addNewPriceReduction(state,action){
+        itemAddedPriceReduction: (state,action)=>{
             const {newPriceReduction, itemId} = action.payload
             const currentItem = state.items.find((item)=> item.id === itemId)
             if(currentItem){
                 currentItem.price_reductions.push(...newPriceReduction)
             }
-        }
+        },
     }
 })
 
 export const selectAllItems = (state) => state.items.items
-export const {itemAdded, deleteItem, addNewSupplier, addNewPriceReduction } = itemSlice.actions
+export const selectOneItemById = (state, id) => state.items.items.find((item)=> item.item_id === id)
+
+export const {itemAdded, itemAddedPriceReduction, itemSupplierAdded, itemDeleted } = itemSlice.actions
 export default  itemSlice.reducer
