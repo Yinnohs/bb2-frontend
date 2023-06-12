@@ -22,7 +22,7 @@ const userSlice = createSlice({
     reducers:{
         addUser:{
             reducer(state, action){
-                state.push(action.payload)
+                state.users.push(action.payload)
             },
             prepare(name, surname = '', email){
                 return{

@@ -1,4 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { baseUrl } from "../baseApi";
+import axios from "axios";
+
+
 
 const initialState = {
     user: {

@@ -1,21 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { baseUrl } from "../baseApi"
+import axios from "axios"
+
+const itemsAPi = axios.create({baseURL:`${baseUrl}/item`})
+
+export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async ()=>{
+    try {
+        const {data} = await itemsAPi.get("/all")
+        return data
+    } catch (error) {
+        return error.message
+    }
+}) 
 
 const initialState= {
-    items:[{
-        item_id:1,
-        item_code: 1234,
-        description: "boilerplate item",
-        price: 12.2,
-        item_state: "ACTIVE",
-        creator:{
-                user_id:1,
-                name: "sexy admin",
-                surname: "really sexy admin",
-                email: "admin@admin.com",
-            },
-        suppliers:[],
-        price_reductions: []
-    }],
+    items:[],
     status:'idle',
     error: null
 }
@@ -64,6 +63,24 @@ const itemSlice = createSlice({
                 currentItem.price_reductions.push(...newPriceReduction)
             }
         },
+    },
+    extraReducers(builder){
+        builder
+        .addCase(fetchAllItems.pending, (state)=>{
+            state.status = 'loading'
+        })
+
+        .addCase(fetchAllItems.fulfilled, (state,action)=>{
+            state.status = 'succeded'
+            const loadedItems = action.payload
+            state.items.concat(loadedItems)
+        })
+
+        .addCase(fetchAllItems.rejected, (state, action)=>{
+            state.status = 'rejected'
+            state.error = action.error.message
+        })
+
     }
 })
 
