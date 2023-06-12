@@ -85,6 +85,8 @@ const itemSlice = createSlice({
 })
 
 export const selectAllItems = (state) => state.items.items
+export const selectItemStatus = (state)=> state.items.status
+export const selectItemsError = (state)=> state.items.error
 export const selectOneItemById = (state, id) => state.items.items.find((item)=> item.item_id === id)
 
 export const {itemAdded, itemAddedPriceReduction, itemSupplierAdded, itemDeleted } = itemSlice.actions

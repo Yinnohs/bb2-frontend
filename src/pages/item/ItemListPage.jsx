@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     Box,
     Button,
@@ -11,14 +11,28 @@ import {
 } from '@chakra-ui/react'
 import { ItemCard } from '../../components/card'
 import { ItemModal } from '../../components/items'
-import { useSelector } from 'react-redux'
-import { selectAllItems } from '../../features/items/itemsSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    selectAllItems,
+    selectItemStatus,
+    selectItemsError,
+    fetchAllItems,
+} from '../../features/items/itemsSlice'
 
 export const ItemListPage = () => {
+    const dispatch = useDispatch()
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
     const items = useSelector(selectAllItems)
-    const [isLoading, setIsLoading] = useState(true)
+    const itemsStatus = useSelector(selectItemStatus)
+    const itemsError = useSelector(selectItemsError)
     const { isOpen, onClose, onOpen } = useDisclosure()
+
+    useEffect(() => {
+        if (itemsStatus === 'idle') {
+            dispatch(fetchAllItems())
+        }
+    }, [itemsStatus, dispatch])
+
     return (
         <Box w={'100%'} minH={'100%'}>
             <Flex w={'100%'} minH={'100%'} direction={'column'}>
