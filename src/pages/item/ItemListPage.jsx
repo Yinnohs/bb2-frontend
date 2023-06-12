@@ -7,14 +7,18 @@ import {
     Grid,
     Select,
     useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react'
-import { itemListMockups } from '../../mock/Items'
 import { ItemCard } from '../../components/card'
+import { ItemModal } from '../../components/items'
+import { useSelector } from 'react-redux'
+import { selectAllItems } from '../../features/items/itemsSlice'
 
 export const ItemListPage = () => {
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
-    const [items, setItems] = useState(itemListMockups)
+    const items = useSelector(selectAllItems)
     const [isLoading, setIsLoading] = useState(true)
+    const { isOpen, onClose, onOpen } = useDisclosure()
     return (
         <Box w={'100%'} minH={'100%'}>
             <Flex w={'100%'} minH={'100%'} direction={'column'}>
@@ -25,6 +29,7 @@ export const ItemListPage = () => {
                     align={'center'}
                 >
                     <Button
+                        onClick={onOpen}
                         color={textBorderValue}
                         borderColor={textBorderValue}
                         border={'1px'}
@@ -46,7 +51,7 @@ export const ItemListPage = () => {
                         maxWidth={'30%'}
                         backgroundColor={useColorModeValue(
                             'none',
-                            'blackAlpha.500'
+                            'blackAlpha.500',
                         )}
                         color={textBorderValue}
                         borderColor={textBorderValue}
@@ -59,7 +64,6 @@ export const ItemListPage = () => {
                         templateColumns={'repeat(3, 1fr)'}
                         gap={6}
                         scrollBehavior={'smooth'}
-                        scroll
                     >
                         {items.length > 0 ? (
                             items.map((item, i) => {
@@ -71,6 +75,7 @@ export const ItemListPage = () => {
                     </Grid>
                 </Flex>
             </Flex>
+            <ItemModal isOpen={isOpen} onClose={onClose} />
         </Box>
     )
 }

@@ -11,16 +11,22 @@ import {
     SimpleGrid,
     StackDivider,
     useColorModeValue,
-    List,
-    ListItem,
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
-import {} from '@chakra-ui/icons'
+import { useSelector } from 'react-redux'
+import { selectOneItemById } from '../../features/items/itemsSlice'
+import {
+    ItemDetailsPriceReductions,
+    ItemsDetailsSuppliers,
+} from '../../components/items'
 
 export const ItemDetails = () => {
     const { id } = useParams()
+    const itemId = parseInt(id, 10)
+    const item = useSelector((state) => selectOneItemById(state, itemId))
+
     return (
-        <Container maxW={'7xl'}>
+        <Container maxW={'7xl'} minH={'100vh'}>
             <SimpleGrid
                 columns={{ base: 1, lg: 2 }}
                 spacing={{ base: 8, md: 20 }}
@@ -44,14 +50,14 @@ export const ItemDetails = () => {
                             fontWeight={600}
                             fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
                         >
-                            Andromeda black hole
+                            {item?.description}
                         </Heading>
                         <Text
                             color={useColorModeValue('gray.900', 'gray.400')}
                             fontWeight={300}
                             fontSize={'2xl'}
                         >
-                            350.00 €
+                            {item?.price} €
                         </Text>
                     </Box>
 
@@ -62,7 +68,7 @@ export const ItemDetails = () => {
                             <StackDivider
                                 borderColor={useColorModeValue(
                                     'gray.200',
-                                    'gray.600'
+                                    'gray.600',
                                 )}
                             />
                         }
@@ -71,121 +77,27 @@ export const ItemDetails = () => {
                             <Text
                                 color={useColorModeValue(
                                     'gray.500',
-                                    'gray.400'
+                                    'gray.400',
                                 )}
                                 fontSize={'2xl'}
                                 fontWeight={'300'}
                             >
-                                Just another black hole in the system
+                                {item?.item_state}
                             </Text>
-                            <Text fontSize={'lg'}>
-                                This black hole is near the block B023-G078 just
-                                a random mind weight black hole
-                            </Text>
+                            <Text fontSize={'lg'}>{item?.item_code}</Text>
                         </VStack>
-                        <Box>
-                            <Text
-                                fontSize={{ base: '16px', lg: '18px' }}
-                                color={useColorModeValue(
-                                    'purple.500',
-                                    'purple.300'
-                                )}
-                                fontWeight={'500'}
-                                textTransform={'uppercase'}
-                                mb={'4'}
-                            >
-                                Features
-                            </Text>
 
-                            <SimpleGrid
-                                columns={{ base: 1, md: 2 }}
-                                spacing={10}
-                            >
-                                <List spacing={2}>
-                                    <ListItem>
-                                        Mid higclass mass density
-                                    </ListItem>
-                                    <ListItem>High enrgy emitted</ListItem>
-                                    <ListItem>
-                                        Good for creating white smurfs
-                                    </ListItem>
-                                </List>
-                            </SimpleGrid>
-                        </Box>
-                        <Box>
-                            <Text
-                                fontSize={{ base: '16px', lg: '18px' }}
-                                color={useColorModeValue(
-                                    'purple.',
-                                    'purple.300'
-                                )}
-                                fontWeight={'500'}
-                                textTransform={'uppercase'}
-                                mb={'4'}
-                            >
-                                Supplier Details
-                            </Text>
+                        {item.suppliers ?? (
+                            <ItemsDetailsSuppliers
+                                suppliers={item?.suppliers}
+                            />
+                        )}
 
-                            <List spacing={2}>
-                                <ListItem>
-                                    <Text
-                                        as={'span'}
-                                        fontWeight={'bold'}
-                                        mr={5}
-                                    >
-                                        Name:
-                                    </Text>
-                                    Black holes andromeda A.S.
-                                </ListItem>
-                                <ListItem>
-                                    <Text
-                                        as={'span'}
-                                        fontWeight={'bold'}
-                                        mr={5}
-                                    >
-                                        Country:
-                                    </Text>
-                                    Spain
-                                </ListItem>
-                            </List>
-                        </Box>
-                        <Box>
-                            <Text
-                                fontSize={{ base: '16px', lg: '18px' }}
-                                color={useColorModeValue(
-                                    'purple.',
-                                    'purple.300'
-                                )}
-                                fontWeight={'500'}
-                                textTransform={'uppercase'}
-                                mb={'4'}
-                            >
-                                Discount Applied
-                            </Text>
-
-                            <List spacing={2}>
-                                <ListItem>
-                                    <Text
-                                        as={'span'}
-                                        fontWeight={'bold'}
-                                        mr={5}
-                                    >
-                                        Discount applied:
-                                    </Text>
-                                    20%
-                                </ListItem>
-                                <ListItem>
-                                    <Text
-                                        as={'span'}
-                                        fontWeight={'bold'}
-                                        mr={5}
-                                    >
-                                        Discount until:
-                                    </Text>
-                                    20/10/2555
-                                </ListItem>
-                            </List>
-                        </Box>
+                        {item.price_reductions ?? (
+                            <ItemDetailsPriceReductions
+                                priceReductions={item?.price_reductions}
+                            />
+                        )}
                     </Stack>
 
                     <Button
@@ -202,7 +114,7 @@ export const ItemDetails = () => {
                             boxShadow: 'lg',
                         }}
                     >
-                        Add to cart
+                        Update Item
                     </Button>
 
                     <Stack
@@ -210,7 +122,11 @@ export const ItemDetails = () => {
                         alignItems="center"
                         justifyContent={'center'}
                     >
-                        <Text> Created by : Jose I soto </Text>
+                        <Text>
+                            {' '}
+                            Created by :{' '}
+                            {` ${item?.creator.name} ${item?.creator.surname}`}
+                        </Text>
                     </Stack>
                 </Stack>
             </SimpleGrid>

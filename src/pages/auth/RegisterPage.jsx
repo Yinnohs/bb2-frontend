@@ -1,12 +1,6 @@
 import {
     Flex,
     Box,
-    FormControl,
-    FormLabel,
-    Input,
-    InputGroup,
-    HStack,
-    InputRightElement,
     Stack,
     Button,
     Heading,
@@ -14,12 +8,39 @@ import {
     useColorModeValue,
     Link,
 } from '@chakra-ui/react'
-import { useState } from 'react'
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { CreateUserForm } from '../../components/user'
 
 export const RegisterPage = () => {
-    const [showPassword, setShowPassword] = useState(false)
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            surname: '',
+            password: '',
+            email: '',
+        },
+        validationSchema: Yup.object({
+            name: Yup.string()
+                .required('name required')
+                .min(
+                    4,
+                    'The name field should have at least 4 characters long',
+                ),
+            email: Yup.string()
+                .required('email required')
+                .email('not valid email'),
+            password: Yup.string()
+                .required('password required')
+                .min(6, 'The password should have at least 6 characters'),
+        }),
+        onSubmit: (values, actions) => {
+            alert(values)
+            actions.resetForm()
+        },
+    })
+
     const navigation = useNavigate()
     return (
         <Flex
@@ -48,56 +69,10 @@ export const RegisterPage = () => {
                     p={8}
                 >
                     <Stack spacing={4}>
-                        <HStack>
-                            <Box>
-                                <FormControl id="firstName" isRequired>
-                                    <FormLabel>First Name</FormLabel>
-                                    <Input
-                                        focusBorderColor="purple.600"
-                                        type="text"
-                                    />
-                                </FormControl>
-                            </Box>
-                            <Box>
-                                <FormControl id="lastName">
-                                    <FormLabel>Last Name</FormLabel>
-                                    <Input
-                                        focusBorderColor="purple.600"
-                                        type="text"
-                                    />
-                                </FormControl>
-                            </Box>
-                        </HStack>
-                        <FormControl id="email" isRequired>
-                            <FormLabel>Email address</FormLabel>
-                            <Input focusBorderColor="purple.600" type="email" />
-                        </FormControl>
-                        <FormControl id="password" isRequired>
-                            <FormLabel>Password</FormLabel>
-                            <InputGroup>
-                                <Input
-                                    type={showPassword ? 'text' : 'password'}
-                                />
-                                <InputRightElement h={'full'}>
-                                    <Button
-                                        variant={'ghost'}
-                                        onClick={() =>
-                                            setShowPassword(
-                                                (showPassword) => !showPassword
-                                            )
-                                        }
-                                    >
-                                        {showPassword ? (
-                                            <ViewIcon />
-                                        ) : (
-                                            <ViewOffIcon />
-                                        )}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
-                        </FormControl>
+                        <CreateUserForm formik={formik} />
                         <Stack spacing={10} pt={2}>
                             <Button
+                                onClick={formik.submitForm}
                                 loadingText="Submitting"
                                 size="lg"
                                 bg={'purple.400'}
@@ -105,6 +80,7 @@ export const RegisterPage = () => {
                                 _hover={{
                                     bg: 'purple.500',
                                 }}
+                                type="button"
                             >
                                 Sign up
                             </Button>

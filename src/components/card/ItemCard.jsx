@@ -63,14 +63,13 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                         textTransform={'uppercase'}
                     >
                         {item?.code}
-                        12
                     </Text>
                     <Heading
                         fontSize={'xl'}
                         fontFamily={'body'}
                         fontWeight={500}
                     >
-                        {item?.description}A brief Description
+                        {item?.description}
                     </Heading>
                     <Stack direction={'row'} align={'center'}>
                         <Text
@@ -79,8 +78,7 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                             fontWeight={'bold'}
                             textTransform={'uppercase'}
                         >
-                            {/* {`${item?.creator?.name} ${item?.creator?.surname}`} */}
-                            Jose I Soto
+                            {`${item?.creator?.name} ${item?.creator?.surname}`}
                         </Text>
                         <Badge
                             fontSize={'sm'}
@@ -88,25 +86,28 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                             textColor={'purple.400'}
                             backgroundColor={useColorModeValue(
                                 'white',
-                                'gray.800'
+                                'gray.800',
                             )}
                             border={'1px'}
                             borderColor={'purple.400'}
                         >
-                            {item?.status}
-                            Active
+                            {item?.item_state}
                         </Badge>
                     </Stack>
                     <Stack direction={'row'} align={'center'}>
                         <Text fontWeight={800} fontSize={'xl'}>
-                            {item?.price} 12€
+                            {item?.price}€
                         </Text>
-                        <Text
-                            textDecoration={'line-through'}
-                            color={'gray.600'}
-                        >
-                            {item?.price} 22€
-                        </Text>
+                        {item.price_reductions !== undefined ? (
+                            <Text
+                                textDecoration={'line-through'}
+                                color={'gray.600'}
+                            >
+                                {item?.price}€
+                            </Text>
+                        ) : (
+                            <></>
+                        )}
                     </Stack>
                 </Stack>
             </Box>
