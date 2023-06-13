@@ -11,29 +11,29 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    useToast,
 } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { createItem } from '../../features/items/itemsSlice'
-import { getAuthData } from '../../features/auth'
+import { getCurrentUser } from '../../features/auth'
+import { createItemFormularyFunction } from '../../functions'
+import { CustomAlert } from '../alert'
 
 export const ItemModal = ({ isOpen, onClose }) => {
-    const toast = useToast()
-    const authData = useSelector(getAuthData)
-    const { status, error } = useSelector((state) => state.items)
+    const user = useSelector(getCurrentUser)
+    const { error, status } = useSelector((state) => state.items)
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
             code: 0,
             description: '',
             price: 0.0,
-            creator_id: authData.user.user_id, //
+            creator_id: user?.user_id, //
         },
         validationSchema: Yup.object({
-            item_code: Yup.number()
+            code: Yup.number()
                 .required('the item_code field is required')
                 .integer('the value of the item_code camp should be an integer')
                 .positive('the value should be positive'),
@@ -46,25 +46,7 @@ export const ItemModal = ({ isOpen, onClose }) => {
         }),
 
         onSubmit: async (values, actions) => {
-            dispatch(createItem(values))
-
-            actions.resetForm()
-            if (error && status === 'rejected') {
-                toast({
-                    status: 'error',
-                    isClosable: true,
-                    duration: 10000,
-                    title: `error: ${error}`,
-                })
-            }
-            if (status === 'succeded') {
-                toast({
-                    status: 'success',
-                    isClosable: true,
-                    duration: 10000,
-                    title: `Login Succesfull`,
-                })
-            }
+            createItemFormularyFunction(values, actions, dispatch, createItem)
         },
     })
     // TODO: use inside all i want to add the modal = const { isOpen, onClose } = useDisclosure()
@@ -76,22 +58,20 @@ export const ItemModal = ({ isOpen, onClose }) => {
                 <ModalCloseButton />
                 <ModalBody pb={6}>
                     <FormControl
-                        id="item_code"
+                        id="code"
                         isRequired
-                        isInvalid={
-                            formik.errors.item_code && formik.touched.item_code
-                        }
+                        isInvalid={formik.errors.code && formik.touched.code}
                     >
                         <FormLabel>Item Code</FormLabel>
                         <Input
                             focusBorderColor="purple.600"
                             type="number"
                             onChange={formik.handleChange}
-                            value={formik.values.item_code}
+                            value={formik.values.code}
                             onBlur={formik.handleBlur}
                         />
                         <FormErrorMessage>
-                            {formik.errors.item_code}
+                            {formik.errors.code}
                         </FormErrorMessage>
                     </FormControl>
 
@@ -145,6 +125,14 @@ export const ItemModal = ({ isOpen, onClose }) => {
                     </Button>
                     <Button onClick={onClose}>Cancel</Button>
                 </ModalFooter>
+                {error !== null && status === 'rejected' ? (
+                    <CustomAlert
+                        label={'Error'}
+                        reason={'item code migth be taken'}
+                    />
+                ) : (
+                    <></>
+                )}
             </ModalContent>
         </Modal>
     )

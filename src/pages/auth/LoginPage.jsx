@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { LoginRequest } from '../../features/auth'
-import { authenticateFunction } from './functions/auth'
+import { authenticateFunction } from '../../functions/auth'
 
 import { UserLoginForm } from '../../components/user'
 import { useEffect, useId } from 'react'

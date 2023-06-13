@@ -17,7 +17,7 @@ import { CreateUserForm } from '../../components/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { registerRequest } from '../../features/auth'
-import { authenticateFunction } from './functions/auth'
+import { authenticateFunction } from '../../functions/auth'
 import { CustomAlert } from '../../components/alert'
 
 export const RegisterPage = () => {
