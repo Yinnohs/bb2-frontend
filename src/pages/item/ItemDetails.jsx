@@ -84,18 +84,16 @@ export const ItemDetails = () => {
                             >
                                 {item?.item_state}
                             </Text>
-                            <Text fontSize={'lg'}>{item?.item_code}</Text>
+                            <Text fontSize={'lg'}>{item?.code}</Text>
                         </VStack>
 
-                        {item.suppliers ?? (
-                            <ItemsDetailsSuppliers
-                                suppliers={item?.suppliers}
-                            />
+                        {item?.suppliers ?? (
+                            <ItemsDetailsSuppliers suppliers={item?.supplier} />
                         )}
 
-                        {item.price_reductions ?? (
+                        {item?.price_reductions ?? (
                             <ItemDetailsPriceReductions
-                                priceReductions={item?.price_reductions}
+                                priceReductions={item?.priceReductions}
                             />
                         )}
                     </Stack>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
     Flex,
     Box,
@@ -7,13 +8,21 @@ import {
     Text,
     useColorModeValue,
     Link,
+    useToast,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { CreateUserForm } from '../../components/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { registerRequest } from '../../features/auth'
 
 export const RegisterPage = () => {
+    const toast = useToast()
+    const navigation = useNavigate()
+    const { status, error } = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -35,13 +44,36 @@ export const RegisterPage = () => {
                 .required('password required')
                 .min(6, 'The password should have at least 6 characters'),
         }),
-        onSubmit: (values, actions) => {
-            alert(values)
-            actions.resetForm()
+        onSubmit: async (values, actions) => {
+            values.email.toLowerCase()
+
+            dispatch(registerRequest(values))
+
+            if (!error) actions.resetForm()
+
+            error &&
+                toast({
+                    status: 'error',
+                    isClosable: true,
+                    duration: 10000,
+                    title: `error: ${error}`,
+                })
+            status &&
+                toast({
+                    status: 'success',
+                    isClosable: true,
+                    duration: 10000,
+                    title: `Register Succesfull`,
+                })
         },
     })
 
-    const navigation = useNavigate()
+    useEffect(() => {
+        if (status === 'succeded') {
+            navigation('/login')
+        }
+    }, [status])
+
     return (
         <Flex
             h={'100vh'}

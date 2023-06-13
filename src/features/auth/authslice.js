@@ -22,7 +22,6 @@ export const registerRequest = createAsyncThunk('auth/registerRequest', async (r
     try {
         const { data } = await authAPi.post("/local/register", registerPayload, {headers:headers})
 
-        localStorage.setItem('at', data.jwt)
         return data
     } catch (error) {
 
@@ -77,11 +76,8 @@ export const  authSlice =  createSlice({
             state.status = 'loading'
         })
 
-        .addCase(registerRequest.fulfilled, (state,action)=>{
+        .addCase(registerRequest.fulfilled, (state)=>{
             state.status = 'succeded'
-            const authData = action.payload
-            state.user = authData?.user
-            state.token = authData?.jwt 
         })
 
         .addCase(registerRequest.rejected, (state, action)=>{
