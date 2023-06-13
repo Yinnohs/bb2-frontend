@@ -1,4 +1,4 @@
-export  const createItemFormularyFunction = async (values, actions, dispatch, action)=>{
+export  const executeItemFormularyFunction = async (values, actions, dispatch, action)=>{
 
     dispatch(action(values))
 

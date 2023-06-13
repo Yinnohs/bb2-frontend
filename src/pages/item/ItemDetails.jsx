@@ -11,6 +11,7 @@ import {
     SimpleGrid,
     StackDivider,
     useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -19,11 +20,13 @@ import {
     ItemDetailsPriceReductions,
     ItemsDetailsSuppliers,
 } from '../../components/items'
+import { DeactivateItemModal } from '../../components/items/DeactivateItemModal'
 
 export const ItemDetails = () => {
     const { id } = useParams()
     const itemId = parseInt(id, 10)
     const item = useSelector((state) => selectOneItemById(state, itemId))
+    const { isOpen, onClose, onOpen } = useDisclosure()
 
     return (
         <Container maxW={'7xl'} minH={'100vh'}>
@@ -32,7 +35,7 @@ export const ItemDetails = () => {
                 spacing={{ base: 8, md: 20 }}
                 py={{ base: 18, md: 24 }}
             >
-                <Flex>
+                <Flex direction={'column'} align={'center'}>
                     <Image
                         rounded={'md'}
                         alt={'product image'}
@@ -42,6 +45,24 @@ export const ItemDetails = () => {
                         w={'100%'}
                         h={{ base: '100%', sm: '400px', lg: '500px' }}
                     />
+                    <Button
+                        rounded={'sm'}
+                        w={'50%'}
+                        mt={8}
+                        size={'sm'}
+                        py={'2'}
+                        bg={useColorModeValue('purple.900', 'purple.100')}
+                        color={useColorModeValue('white', 'purple.900')}
+                        textTransform={'uppercase'}
+                        _hover={{
+                            transform: 'translateY(2px)',
+                            boxShadow: 'lg',
+                        }}
+                        onClick={onOpen}
+                        disabled={item.item_state !== 'Active'}
+                    >
+                        Deactivate Item
+                    </Button>
                 </Flex>
                 <Stack spacing={{ base: 6, md: 12 }}>
                     <Box as={'header'}>
@@ -127,6 +148,11 @@ export const ItemDetails = () => {
                         </Text>
                     </Stack>
                 </Stack>
+                <DeactivateItemModal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    itemId={itemId}
+                />
             </SimpleGrid>
         </Container>
     )

@@ -18,7 +18,7 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { createItem } from '../../features/items/itemsSlice'
 import { getCurrentUser } from '../../features/auth'
-import { createItemFormularyFunction } from '../../functions'
+import { executeItemFormularyFunction } from '../../functions'
 import { CustomAlert } from '../alert'
 
 export const ItemModal = ({ isOpen, onClose }) => {
@@ -46,7 +46,7 @@ export const ItemModal = ({ isOpen, onClose }) => {
         }),
 
         onSubmit: async (values, actions) => {
-            createItemFormularyFunction(values, actions, dispatch, createItem)
+            executeItemFormularyFunction(values, actions, dispatch, createItem)
         },
     })
     // TODO: use inside all i want to add the modal = const { isOpen, onClose } = useDisclosure()
