@@ -10,11 +10,14 @@ import {
 } from '@chakra-ui/react'
 
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 
 export const ItemCard = ({ image = '/blackhole.webp', item }) => {
+    const navigation = useNavigate()
     return (
         <Center py={12}>
             <Box
+                onClick={() => navigation(`/items/details/${item.item_id}`)}
                 role={'group'}
                 p={6}
                 maxW={'330px'}
@@ -24,6 +27,9 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                 rounded={'lg'}
                 pos={'relative'}
                 zIndex={1}
+                _hover={{
+                    cursor: 'pointer',
+                }}
             >
                 <Box
                     rounded={'lg'}

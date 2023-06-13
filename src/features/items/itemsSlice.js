@@ -5,15 +5,17 @@ import axios from "axios"
 const itemsAPi = axios.create({baseURL:`${baseUrl}/item`})
 
 
-export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async ()=>{
+export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async (state, {rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
-        const {data} = await itemsAPi.get("/all",{headers:{Authorization:`Bearer ${token}`}})
+        const {data} = await itemsAPi.get(`/all?state=${state}`,{
+            headers:{Authorization:`Bearer ${token}`,
+        }})
         return data
     } catch (error) {
-        return error.message
+        return rejectWithValue(error.message)
     }
-}) 
+})
 
 const initialState= {
     items:[],

@@ -18,7 +18,6 @@ import {
     selectItemsError,
     fetchAllItems,
 } from '../../features/items/itemsSlice'
-import { getAccessToken } from '../../features/auth'
 import { useNavigate } from 'react-router-dom'
 
 export const ItemListPage = () => {
@@ -29,6 +28,10 @@ export const ItemListPage = () => {
     const itemsStatus = useSelector(selectItemStatus)
     const itemsError = useSelector(selectItemsError)
     const { isOpen, onClose, onOpen } = useDisclosure()
+
+    const handleFilterByState = (event) => {
+        dispatch(fetchAllItems(event.target.value))
+    }
 
     useEffect(() => {
         if (itemsStatus === 'idle') {
@@ -72,9 +75,10 @@ export const ItemListPage = () => {
                         )}
                         color={textBorderValue}
                         borderColor={textBorderValue}
+                        onChange={handleFilterByState}
                     >
-                        <option value="ACTIVE">Active</option>
-                        <option value="INACTIVE">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Discontinued">Discontinued</option>
                     </Select>
                     <Grid
                         width={'80%'}
