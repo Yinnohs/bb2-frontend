@@ -11,25 +11,26 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    useToast,
 } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { itemAdded, selectAllItems } from '../../features/items/itemsSlice'
+import { createItem } from '../../features/items/itemsSlice'
 import { getAuthData } from '../../features/auth'
 
 export const ItemModal = ({ isOpen, onClose }) => {
+    const toast = useToast()
     const authData = useSelector(getAuthData)
-    const items = useSelector(selectAllItems)
+    const { status, error } = useSelector((state) => state.items)
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            item_id: items?.length,
-            item_code: 0,
+            code: 0,
             description: '',
             price: 0.0,
-            creator: authData.user, //
+            creator_id: authData.user.user_id, //
         },
         validationSchema: Yup.object({
             item_code: Yup.number()
@@ -44,18 +45,26 @@ export const ItemModal = ({ isOpen, onClose }) => {
             price: Yup.number().required('this field price is required'),
         }),
 
-        onSubmit: (data, actions) => {
-            dispatch(
-                itemAdded({
-                    item_id: data.item_id,
-                    item_code: data.item_code,
-                    description: data.description,
-                    price: data.price,
-                    creator: data.creator,
-                }),
-            )
+        onSubmit: async (values, actions) => {
+            dispatch(createItem(values))
+
             actions.resetForm()
-            onClose()
+            if (error && status === 'rejected') {
+                toast({
+                    status: 'error',
+                    isClosable: true,
+                    duration: 10000,
+                    title: `error: ${error}`,
+                })
+            }
+            if (status === 'succeded') {
+                toast({
+                    status: 'success',
+                    isClosable: true,
+                    duration: 10000,
+                    title: `Login Succesfull`,
+                })
+            }
         },
     })
     // TODO: use inside all i want to add the modal = const { isOpen, onClose } = useDisclosure()

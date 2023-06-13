@@ -17,6 +17,21 @@ export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async (stat
     }
 })
 
+export const createItem = createAsyncThunk('items/createItem', async (payload, {rejectWithValue})=>{
+    try {
+        const token = localStorage.getItem('at')
+        const {data} = await itemsAPi.post(`/create`, payload ,{
+            headers:{Authorization:`Bearer ${token}`,
+        }})
+        return data
+    } catch (error) {
+        return rejectWithValue(error.message)
+    }
+})
+
+
+
+
 const initialState= {
     items:[],
     status:'idle',
@@ -81,6 +96,21 @@ const itemSlice = createSlice({
         })
 
         .addCase(fetchAllItems.rejected, (state, action)=>{
+            state.status = 'rejected'
+            state.error = action.error.message
+        })
+
+        .addCase(createItem.pending, (state)=>{
+            state.status = 'loading'
+        })
+
+        .addCase(createItem.fulfilled, (state,action)=>{
+            state.status = 'succeded'
+            const payload = action.payload
+            state.items.push(payload)
+        })
+
+        .addCase(createItem.rejected, (state, action)=>{
             state.status = 'rejected'
             state.error = action.error.message
         })

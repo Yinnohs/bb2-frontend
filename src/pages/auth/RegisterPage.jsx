@@ -17,6 +17,8 @@ import { CreateUserForm } from '../../components/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { registerRequest } from '../../features/auth'
+import { authenticateFunction } from './functions/auth'
+import { CustomAlert } from '../../components/alert'
 
 export const RegisterPage = () => {
     const toast = useToast()
@@ -45,26 +47,15 @@ export const RegisterPage = () => {
                 .min(6, 'The password should have at least 6 characters'),
         }),
         onSubmit: async (values, actions) => {
-            values.email.toLowerCase()
-
-            dispatch(registerRequest(values))
-
-            if (!error) actions.resetForm()
-
-            error &&
-                toast({
-                    status: 'error',
-                    isClosable: true,
-                    duration: 10000,
-                    title: `error: ${error}`,
-                })
-            status &&
-                toast({
-                    status: 'success',
-                    isClosable: true,
-                    duration: 10000,
-                    title: `Register Succesfull`,
-                })
+            authenticateFunction(
+                values,
+                actions,
+                dispatch,
+                registerRequest,
+                status,
+                error,
+                toast,
+            )
         },
     })
 
@@ -127,6 +118,14 @@ export const RegisterPage = () => {
                                     Login
                                 </Link>
                             </Text>
+                            {error !== null ? (
+                                <CustomAlert
+                                    label={'Error! '}
+                                    reason={'Email migth be taken'}
+                                />
+                            ) : (
+                                <></>
+                            )}
                         </Stack>
                     </Stack>
                 </Box>

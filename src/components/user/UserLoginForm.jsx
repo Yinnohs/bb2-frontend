@@ -17,8 +17,9 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CustomSpinner } from '../spinner'
+import { CustomAlert } from '../alert'
 
-export const UserLoginForm = ({ formik, isLoading = false }) => {
+export const UserLoginForm = ({ formik, isLoading = false, error = null }) => {
     const [showPassword, setShowPassword] = useState(false)
     const navigation = useNavigate()
     return (
@@ -101,9 +102,18 @@ export const UserLoginForm = ({ formik, isLoading = false }) => {
                             bg: 'purple.500',
                         }}
                         onClick={formik.handleSubmit}
+                        disabled={isLoading}
                     >
                         {isLoading ? <CustomSpinner /> : 'sign in'}
                     </Button>
+                    {error !== null ? (
+                        <CustomAlert
+                            label={'Error!'}
+                            reason={'Wrong Credentials'}
+                        />
+                    ) : (
+                        <></>
+                    )}
                 </Stack>
             </Stack>
         </Box>
@@ -112,4 +122,5 @@ export const UserLoginForm = ({ formik, isLoading = false }) => {
 UserLoginForm.propTypes = {
     formik: PropTypes.object,
     isLoading: PropTypes.bool,
+    error: PropTypes.string,
 }
