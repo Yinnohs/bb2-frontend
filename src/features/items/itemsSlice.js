@@ -29,6 +29,18 @@ export const createItem = createAsyncThunk('items/createItem', async (payload, {
     }
 })
 
+export const deactivateItem = createAsyncThunk('items/deactivateItem', async (payload, {rejectWithValue})=>{
+    try {
+        const token = localStorage.getItem('at')
+        const {data} = await itemsAPi.patch(`/deactivate`, payload ,{
+            headers:{Authorization:`Bearer ${token}`,
+        }})
+        return data
+    } catch (error) {
+        return rejectWithValue(error.message)
+    }
+})
+
 
 
 
@@ -111,6 +123,27 @@ const itemSlice = createSlice({
         })
 
         .addCase(createItem.rejected, (state, action)=>{
+            state.status = 'rejected'
+            state.error = action.error.message
+        })
+
+        .addCase(deactivateItem.pending, (state)=>{
+            state.status = 'loading'
+        })
+
+        .addCase(deactivateItem.fulfilled, (state,action)=>{
+            state.status = 'succeded'
+            const payload = action.payload
+            state.items = state.items.map((item)=>{
+
+                if(item.item_id === payload.item_id){
+                    item.item_state = "Discotinued"
+                }
+                return item
+            })
+        })
+
+        .addCase(deactivateItem.rejected, (state, action)=>{
             state.status = 'rejected'
             state.error = action.error.message
         })

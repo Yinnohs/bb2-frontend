@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CustomAlert } from '../alert'
 import { getCurrentUser } from '../../features/auth'
 import { executeItemFormularyFunction } from '../../functions'
+import { deactivateItem } from '../../features/items/itemsSlice'
 
 export const DeactivateItemModal = ({ isOpen, onClose, itemId }) => {
     const { error, status } = useSelector((state) => state.items)
@@ -32,12 +33,21 @@ export const DeactivateItemModal = ({ isOpen, onClose, itemId }) => {
         },
         validationSchema: Yup.object({
             deactivate_reason: Yup.string()
-                .required('deactivate reason is required')
-                .min(4, 'deactivate reason should have at least 4 characters'),
+                .required('reason is required')
+                .min(10, ' reason should have at least 10 characters'),
         }),
 
         onSubmit: async (values, actions) => {
-            executeItemFormularyFunction(values, actions, dispatch)
+            executeItemFormularyFunction(
+                values,
+                actions,
+                dispatch,
+                deactivateItem,
+            )
+
+            if (status !== 'error') {
+                onClose()
+            }
         },
     })
     // TODO: use inside all i want to add the modal = const { isOpen, onClose } = useDisclosure()
@@ -49,7 +59,7 @@ export const DeactivateItemModal = ({ isOpen, onClose, itemId }) => {
                 <ModalCloseButton />
                 <ModalBody pb={6}>
                     <FormControl
-                        id="deactivateReason"
+                        id="deactivate_reason"
                         isRequired
                         isInvalid={
                             formik.errors.deactivate_reason &&
@@ -65,7 +75,7 @@ export const DeactivateItemModal = ({ isOpen, onClose, itemId }) => {
                             onBlur={formik.handleBlur}
                         />
                         <FormErrorMessage>
-                            {formik.errors.deactivateReason}
+                            {formik.errors.deactivate_reason}
                         </FormErrorMessage>
                     </FormControl>
                 </ModalBody>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
     Box,
     Container,
@@ -15,18 +16,25 @@ import {
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectOneItemById } from '../../features/items/itemsSlice'
+import { selectAllItems } from '../../features/items/itemsSlice'
 import {
     ItemDetailsPriceReductions,
     ItemsDetailsSuppliers,
 } from '../../components/items'
 import { DeactivateItemModal } from '../../components/items/DeactivateItemModal'
+import { useEffect, useState } from 'react'
 
 export const ItemDetails = () => {
     const { id } = useParams()
     const itemId = parseInt(id, 10)
-    const item = useSelector((state) => selectOneItemById(state, itemId))
+    const items = useSelector(selectAllItems)
+    const [item, setItem] = useState({})
     const { isOpen, onClose, onOpen } = useDisclosure()
+
+    useEffect(() => {
+        const item = items.find((item) => item.item_id === itemId)
+        setItem(item)
+    }, [item])
 
     return (
         <Container maxW={'7xl'} minH={'100vh'}>
