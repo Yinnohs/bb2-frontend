@@ -4,9 +4,10 @@ import axios from "axios"
 
 const itemsAPi = axios.create({baseURL:`${baseUrl}/item`})
 
-export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async ()=>{
+
+export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async (token)=>{
     try {
-        const {data} = await itemsAPi.get("/all")
+        const {data} = await itemsAPi.get("/all",{headers:{Authorization: token}})
         return data
     } catch (error) {
         return error.message
@@ -34,7 +35,7 @@ const itemSlice = createSlice({
                         item_code: data.item_code,
                         description: data.description,
                         price: data.price,
-                        item_state: "ACTIVE",
+                        item_state: "Active",
                         creator: data.creator,
                         suppliers,
                         price_reductions: priceReductions,
