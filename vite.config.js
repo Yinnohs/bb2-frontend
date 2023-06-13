@@ -9,5 +9,18 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
-  }
+    proxy:{
+      "/api":{
+        ws:true,
+        changeOrigin: true,
+        target: "http://localhost:5050/api/v1/",
+        secure: false,
+        rewrite: (path)=> path.replace(/^\/api/, "") 
+      }
+    },
+    cors:{
+      origin: "*"
+    }
+  },
+
 })

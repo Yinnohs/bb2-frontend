@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import {
     Box,
     Button,
@@ -18,8 +18,11 @@ import {
     selectItemsError,
     fetchAllItems,
 } from '../../features/items/itemsSlice'
+import { getAccessToken } from '../../features/auth'
+import { useNavigate } from 'react-router-dom'
 
 export const ItemListPage = () => {
+    const navigation = useNavigate()
     const dispatch = useDispatch()
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
     const items = useSelector(selectAllItems)
@@ -31,7 +34,7 @@ export const ItemListPage = () => {
         if (itemsStatus === 'idle') {
             dispatch(fetchAllItems())
         }
-    }, [itemsStatus, dispatch])
+    }, [itemsStatus, dispatch, items])
 
     return (
         <Box w={'100%'} minH={'100%'}>

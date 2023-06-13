@@ -5,9 +5,10 @@ import axios from "axios"
 const itemsAPi = axios.create({baseURL:`${baseUrl}/item`})
 
 
-export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async (token)=>{
+export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async ()=>{
     try {
-        const {data} = await itemsAPi.get("/all",{headers:{Authorization: token}})
+        const token = localStorage.getItem('at')
+        const {data} = await itemsAPi.get("/all",{headers:{Authorization:`Bearer ${token}`}})
         return data
     } catch (error) {
         return error.message
@@ -74,7 +75,7 @@ const itemSlice = createSlice({
         .addCase(fetchAllItems.fulfilled, (state,action)=>{
             state.status = 'succeded'
             const loadedItems = action.payload
-            state.items.concat(loadedItems)
+            state.items = loadedItems
         })
 
         .addCase(fetchAllItems.rejected, (state, action)=>{

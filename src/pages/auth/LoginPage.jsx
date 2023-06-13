@@ -57,7 +57,6 @@ export const LoginPage = () => {
     })
 
     useEffect(() => {
-        console.log(token)
         if (token !== null && token !== '') {
             navigation('/items')
         }
