@@ -15,13 +15,21 @@ import {
     useColorMode,
     Center,
     Image,
+    Text,
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { useSelector } from 'react-redux'
+import { getCurrentUser } from '../../features/auth'
+import { useNavigate } from 'react-router-dom'
+import { NavLink } from './NavLink'
 const image = '/astronaut.jfif'
 
 export const NavBar = () => {
     const { colorMode, toggleColorMode } = useColorMode()
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const user = useSelector(getCurrentUser)
+    const navigation = useNavigate()
+    const logOut = () => {}
+
     return (
         <Box
             position={'sticky'}
@@ -32,18 +40,23 @@ export const NavBar = () => {
             shadow={'md'}
             zIndex={99}
         >
-            <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+            <Flex
+                h={16}
+                flexDirection={'row'}
+                alignItems={'center'}
+                justifyContent={'space-between'}
+            >
                 <Box w={100} h={50}>
                     <Image src="/logo.svg" />
                 </Box>
-
+                <NavLink to={'/items'} label={'Home'} />
                 <Flex alignItems={'center'}>
                     <Stack direction={'row'} spacing={7}>
                         <Button
                             onClick={toggleColorMode}
                             backgroundColor={useColorModeValue(
                                 'purple.200',
-                                'gray.700'
+                                'gray.700',
                             )}
                             rounded={'3xl'}
                         >
@@ -67,11 +80,20 @@ export const NavBar = () => {
                                 </Center>
                                 <br />
                                 <Center>
-                                    <p>Jose I Soto</p>
+                                    <p>{`${user?.name}`}</p>
                                 </Center>
                                 <br />
                                 <MenuDivider />
-                                <MenuItem>Your Servers</MenuItem>
+                                {user?.roles?.length > 0 &&
+                                user?.roles[0]?.role === 'ADMIN' ? (
+                                    <MenuItem
+                                        onClick={(e) => navigation('/admin')}
+                                    >
+                                        Admin panel
+                                    </MenuItem>
+                                ) : (
+                                    <></>
+                                )}
                                 <MenuItem>Account Settings</MenuItem>
                                 <MenuItem>Logout</MenuItem>
                             </MenuList>

@@ -1,17 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    users:[{
-        user_id:1,
-        name: "sexy admin",
-        surname: "really sexy admin",
-        email: "admin@admin.com",
-        roles:[{
-            role_id:1,
-            role:  "ADMIN"
-        }]
-
-    }],
+    users:[],
     status:'idle',
     error: null
 }

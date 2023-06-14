@@ -11,6 +11,7 @@ export const LoginRequest = createAsyncThunk('auth/loginRequest,', async (loginP
         const { data } = await authAPi.post("/local/login", loginPayload, {headers:headers})
 
         localStorage.setItem('at', data.jwt)
+        localStorage.setItem('user', JSON.stringify(data.user))
 
         return data
     } catch (error) {
@@ -37,7 +38,7 @@ export const registerRequest = createAsyncThunk('auth/registerRequest', async (r
 
 
 const initialState = {
-    user: {},
+    user: localStorage.getItem('user') ? localStorage.getItem('user'): {},
     token: localStorage.getItem('at') ? localStorage.getItem('at') : null ,
     staus:'', // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null
@@ -48,10 +49,10 @@ export const  authSlice =  createSlice({
     name:'auth',
     initialState,
     reducers:{
-        setAuthData:(state, action )=>{
-            const data = action.payload
-            state.token = data?.jwt
-            state.user = data?.user
+        logout:(state)=>{
+            localStorage.removeItem('user')
+            localStorage.removeItem('at')
+            state.auth = initialState
         }
     },
     extraReducers(builder){
@@ -91,5 +92,5 @@ export const  authSlice =  createSlice({
 export const getAuthData = (state)=> state.auth
 export const getCurrentUser = (state)=> state.auth.user
 export const getAccessToken = (state)=> state.token
-export const { setAuthData }  = authSlice.actions
+export const { logout }  = authSlice.actions
 export  default authSlice.reducer
