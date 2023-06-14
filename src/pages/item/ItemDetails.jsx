@@ -12,7 +12,6 @@ import {
     SimpleGrid,
     StackDivider,
     useColorModeValue,
-    useDisclosure,
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -23,6 +22,7 @@ import {
 } from '../../components/items'
 import { DeactivateItemModal } from '../../components/items/DeactivateItemModal'
 import { useEffect, useState } from 'react'
+import { UpdateItemModal } from '../../components/items/UpdateItemModal'
 
 export const ItemDetails = () => {
     const { id } = useParams()
@@ -31,12 +31,29 @@ export const ItemDetails = () => {
     const [item, setItem] = useState(
         items.find((item) => item.item_id === itemId),
     )
-    const { isOpen, onClose, onOpen } = useDisclosure()
+    const [isUpdateOpen, setUpdateOpen] = useState(false)
+    const [isDeactivateOpen, setDeactivateOpen] = useState(false)
+
+    const openUpdate = () => {
+        setUpdateOpen(true)
+    }
+
+    const closeUpdate = () => {
+        setUpdateOpen(false)
+    }
+
+    const openDeactivate = () => {
+        setDeactivateOpen(true)
+    }
+
+    const closeDeactivate = () => {
+        setDeactivateOpen(false)
+    }
 
     useEffect(() => {
         const item = items.find((item) => item.item_id === itemId)
         setItem(item)
-    }, [onClose])
+    }, [closeUpdate, closeDeactivate])
 
     return (
         <Container maxW={'7xl'} minH={'100vh'}>
@@ -68,7 +85,7 @@ export const ItemDetails = () => {
                             transform: 'translateY(2px)',
                             boxShadow: 'lg',
                         }}
-                        onClick={onOpen}
+                        onClick={openDeactivate}
                         disabled={item?.item_state !== 'Active'}
                     >
                         Deactivate Item
@@ -142,6 +159,7 @@ export const ItemDetails = () => {
                             transform: 'translateY(2px)',
                             boxShadow: 'lg',
                         }}
+                        onClick={openUpdate}
                     >
                         Update Item
                     </Button>
@@ -159,9 +177,14 @@ export const ItemDetails = () => {
                     </Stack>
                 </Stack>
                 <DeactivateItemModal
-                    isOpen={isOpen}
-                    onClose={onClose}
+                    isOpen={isDeactivateOpen}
+                    onClose={closeDeactivate}
                     itemId={itemId}
+                />
+                <UpdateItemModal
+                    item={item}
+                    isOpen={isUpdateOpen}
+                    onClose={closeUpdate}
                 />
             </SimpleGrid>
         </Container>

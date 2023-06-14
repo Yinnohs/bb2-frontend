@@ -38,7 +38,7 @@ export const registerRequest = createAsyncThunk('auth/registerRequest', async (r
 
 
 const initialState = {
-    user: localStorage.getItem('user') ? localStorage.getItem('user'): {},
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {},
     token: localStorage.getItem('at') ? localStorage.getItem('at') : null ,
     staus:'', // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null

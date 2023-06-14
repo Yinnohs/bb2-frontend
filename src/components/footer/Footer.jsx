@@ -11,7 +11,7 @@ export const Footer = () => {
         <Box
             borderTop={'1px'}
             borderColor={useColorModeValue('gray.200', 'gray.700')}
-            bg={useColorModeValue('white', 'gray.800')}
+            bg={useColorModeValue('white', 'blackAlpha.500')}
             color={useColorModeValue('gray.700', 'gray.200')}
         >
             <Container

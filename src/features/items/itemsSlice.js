@@ -5,7 +5,7 @@ import axios from "axios"
 const itemsAPi = axios.create({baseURL:`${baseUrl}/item`})
 
 
-export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async (state, {rejectWithValue})=>{
+export const fetchAllItems = createAsyncThunk('items/fetch', async (state, {rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
         const {data} = await itemsAPi.get(`/all?state=${state}`,{
@@ -17,7 +17,7 @@ export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async (stat
     }
 })
 
-export const createItem = createAsyncThunk('items/createItem', async (payload, {rejectWithValue})=>{
+export const createItem = createAsyncThunk('items/create', async (payload, {rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
         const {data} = await itemsAPi.post(`/create`, payload ,{
@@ -29,10 +29,22 @@ export const createItem = createAsyncThunk('items/createItem', async (payload, {
     }
 })
 
-export const deactivateItem = createAsyncThunk('items/deactivateItem', async (payload, {rejectWithValue})=>{
+export const deactivateItem = createAsyncThunk('items/deactivate', async (payload, {rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
         const {data} = await itemsAPi.patch(`/deactivate`, payload ,{
+            headers:{Authorization:`Bearer ${token}`,
+        }})
+        return data
+    } catch (error) {
+        return rejectWithValue(error.message)
+    }
+})
+
+export const updateItem = createAsyncThunk('items/update', async (payload, {rejectWithValue})=>{
+    try {
+        const token = localStorage.getItem('at')
+        const {data} = await itemsAPi.post(`/create`, payload ,{
             headers:{Authorization:`Bearer ${token}`,
         }})
         return data
@@ -132,7 +144,7 @@ const itemSlice = createSlice({
         })
 
         .addCase(deactivateItem.fulfilled, (state,action)=>{
-            state.status = 'succeded'
+            state.status = 'idle'
             const payload = action.payload
             state.items = state.items.map((item)=>{
 
@@ -144,6 +156,28 @@ const itemSlice = createSlice({
         })
 
         .addCase(deactivateItem.rejected, (state, action)=>{
+            state.status = 'rejected'
+            state.error = action.error.message
+        })
+
+        .addCase(updateItem.pending, (state)=>{
+            state.status = 'loading'
+        })
+
+        .addCase(updateItem.fulfilled, (state,action)=>{
+            state.status = 'succeded'
+            const payload = action.payload
+            state.items = state.items.map((item)=>{
+
+                if(item.item_id === payload.item_id){
+                    return payload
+                }
+                
+                return item
+            })
+        })
+
+        .addCase(updateItem.rejected, (state, action)=>{
             state.status = 'rejected'
             state.error = action.error.message
         })

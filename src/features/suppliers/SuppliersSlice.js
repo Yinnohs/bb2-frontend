@@ -106,8 +106,8 @@ const supplierSlice = createSlice({
 })
 
 
-export const selectAllsuppliers = (state) => state.suppliers.suppliers
-export const selectsupplierstatus = (state)=> state.suppliers.status
+export const selectAllSuppliers = (state) => state.suppliers.suppliers
+export const selectsuppliersStatus = (state)=> state.suppliers.status
 export const selectsuppliersError = (state)=> state.suppliers.error
-export const selectOneItemById = (state, id) => state.suppliers.suppliers.find((item)=> item.item_id === id)
+export const selectOneSupplierById = (state, id) => state.suppliers.suppliers.find((item)=> item.item_id === id)
 export default supplierSlice.reducer

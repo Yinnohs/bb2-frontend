@@ -3,7 +3,8 @@ import authReducer from '../features/auth/authslice'
 import userSlice from '../features/users/usersSlice'
 import itemsReducer from '../features/items/itemsSlice'
 import suppliersReducer from '../features/suppliers/SuppliersSlice'
-import priceReductionsReducer from '../features/price-reductions/priceReduction'
+import priceReductionsReducer from '../features/price-reductions/priceReductionSlice'
+
 export const store = configureStore({
     reducer: {
         auth: authReducer,

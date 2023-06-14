@@ -9,33 +9,31 @@ import {
     MenuList,
     MenuItem,
     MenuDivider,
-    useDisclosure,
     useColorModeValue,
     Stack,
     useColorMode,
     Center,
     Image,
-    Text,
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentUser } from '../../features/auth'
 import { useNavigate } from 'react-router-dom'
 import { NavLink } from './NavLink'
+import { logoutUser } from '../../functions'
 const image = '/astronaut.jfif'
 
 export const NavBar = () => {
     const { colorMode, toggleColorMode } = useColorMode()
     const user = useSelector(getCurrentUser)
     const navigation = useNavigate()
-    const logOut = () => {}
-
+    const distpatch = useDispatch()
     return (
         <Box
             position={'sticky'}
             top={0}
             left={0}
-            bg={useColorModeValue('white', 'gray.800')}
+            bg={useColorModeValue('white', 'blackAlpha.500')}
             px={4}
             shadow={'md'}
             zIndex={99}
@@ -95,7 +93,13 @@ export const NavBar = () => {
                                     <></>
                                 )}
                                 <MenuItem>Account Settings</MenuItem>
-                                <MenuItem>Logout</MenuItem>
+                                <MenuItem
+                                    onClick={() =>
+                                        logoutUser(distpatch, navigation)
+                                    }
+                                >
+                                    Logout
+                                </MenuItem>
                             </MenuList>
                         </Menu>
                     </Stack>

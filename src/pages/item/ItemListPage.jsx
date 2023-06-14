@@ -18,15 +18,15 @@ import {
     selectItemsError,
     fetchAllItems,
 } from '../../features/items/itemsSlice'
-import { useNavigate } from 'react-router-dom'
+import { fetchAllpriceReductions } from '../../features/price-reductions/priceReductionSlice'
+import { fetchAllsuppliers } from '../../features'
 
 export const ItemListPage = () => {
-    const navigation = useNavigate()
     const dispatch = useDispatch()
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
     const items = useSelector(selectAllItems)
     const itemsStatus = useSelector(selectItemStatus)
-    const itemsError = useSelector(selectItemsError)
+
     const { isOpen, onClose, onOpen } = useDisclosure()
 
     const handleFilterByState = (event) => {
@@ -36,6 +36,8 @@ export const ItemListPage = () => {
     useEffect(() => {
         if (itemsStatus === 'idle') {
             dispatch(fetchAllItems())
+            dispatch(fetchAllpriceReductions())
+            dispatch(fetchAllsuppliers())
         }
     }, [itemsStatus, dispatch, items])
 
@@ -81,6 +83,7 @@ export const ItemListPage = () => {
                         <option value="Discontinued">Discontinued</option>
                     </Select>
                     <Grid
+                        mt={20}
                         width={'80%'}
                         templateColumns={'repeat(3, 1fr)'}
                         gap={6}
