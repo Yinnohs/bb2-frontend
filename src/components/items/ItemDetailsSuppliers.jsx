@@ -1,7 +1,8 @@
-import { Box, useColorModeValue, Text } from '@chakra-ui/react'
+import { Box, useColorModeValue, Text, List } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { SupplierSection } from './SupplierSection'
 export const ItemsDetailsSuppliers = ({ suppliers }) => {
+    console.log({ suppliers })
     return (
         <Box>
             <Text
@@ -13,15 +14,20 @@ export const ItemsDetailsSuppliers = ({ suppliers }) => {
             >
                 Suppliers Details
             </Text>
-            {suppliers ??
-                suppliers.map((supplier, i) => {
-                    return (
-                        <SupplierSection
-                            supplier={supplier}
-                            key={`supplier${i}`}
-                        />
-                    )
-                })}
+            <List spacing={2}>
+                {suppliers.length > 0 ? (
+                    suppliers.map((supplier, i) => {
+                        return (
+                            <SupplierSection
+                                supplier={supplier}
+                                key={`supplier${i}`}
+                            />
+                        )
+                    })
+                ) : (
+                    <></>
+                )}
+            </List>
         </Box>
     )
 }

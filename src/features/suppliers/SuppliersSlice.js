@@ -6,7 +6,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const suppliersApi = axios.create({baseURL:`${baseUrl}/supplier`})
 const suppliersAdminApi = axios.create({baseURL:`${baseUrl}/admin/supplier`})
 
-export const fetchAllsuppliers = createAsyncThunk('suppliers/fetchAll', async ({rejectWithValue})=>{
+export const fetchAllsuppliers = createAsyncThunk('suppliers/fetchAll', async (_,{rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
         const {data} = await suppliersApi.get(`/all`,{
@@ -106,7 +106,7 @@ const supplierSlice = createSlice({
 })
 
 
-export const selectAllSuppliers = (state) => state.suppliers.suppliers
+export const selectAllSuppliers = (state) => state.suppliers?.suppliers
 export const selectsuppliersStatus = (state)=> state.suppliers.status
 export const selectsuppliersError = (state)=> state.suppliers.error
 export const selectOneSupplierById = (state, id) => state.suppliers.suppliers.find((item)=> item.item_id === id)

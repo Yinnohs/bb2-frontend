@@ -44,7 +44,7 @@ export const deactivateItem = createAsyncThunk('items/deactivate', async (payloa
 export const updateItem = createAsyncThunk('items/update', async (payload, {rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
-        const {data} = await itemsAPi.post(`/create`, payload ,{
+        const {data} = await itemsAPi.put(`/update`, payload ,{
             headers:{Authorization:`Bearer ${token}`,
         }})
         return data
@@ -175,6 +175,7 @@ const itemSlice = createSlice({
                 
                 return item
             })
+            state.status='idle'
         })
 
         .addCase(updateItem.rejected, (state, action)=>{

@@ -1,8 +1,8 @@
-import { List, ListItem, Text } from '@chakra-ui/react'
+import { ListItem, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 export const SupplierSection = ({ supplier }) => {
     return (
-        <List spacing={2}>
+        <>
             <ListItem>
                 <Text as={'span'} fontWeight={'bold'} mr={5}>
                     Name:
@@ -15,7 +15,7 @@ export const SupplierSection = ({ supplier }) => {
                 </Text>
                 {supplier?.country}
             </ListItem>
-        </List>
+        </>
     )
 }
 SupplierSection.propTypes = {

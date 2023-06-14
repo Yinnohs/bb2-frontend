@@ -23,29 +23,26 @@ import {
     transformSuppliersTofilterdata,
 } from '../../functions'
 import { CustomAlert } from '../alert'
-import {} from '../../features/price-reductions/priceReductionSlice'
 import { useState } from 'react'
 import { CustomSelect } from '../inputs/CustomSelect'
 
 export const UpdateItemModal = ({ isOpen, onClose, item }) => {
     const { error, status } = useSelector((state) => state.items)
-    const { suppliers } = useSelector((state) => state.suppliers)
-    const { priceReductions } = useSelector((state) => state.priceReductions)
+    const suppliers = useSelector((state) => state.suppliers.suppliers)
+    const priceReductions = useSelector(
+        (state) => state.priceReductions.priceReductions,
+    )
     const dispatch = useDispatch()
-    const [selectedSupplier, setSelectSupplier] = useState([])
-    const [selectedPriceReduction, setSelectedPriceReduction] = useState([])
+    const [selectedSupplier, setSelectSupplier] = useState(null)
+    const [selectedPriceReduction, setSelectedPriceReduction] = useState(null)
 
     const formik = useFormik({
         initialValues: {
-            code: item?.item_code,
-            description: item?.descrition,
+            item_id: item?.item_id,
+            code: item?.code,
+            description: item?.description,
             price: item?.price,
-            user: item?.user,
             item_state: item?.item_state,
-            suppliers: item?.suppliers ? item?.suppliers : [],
-            price_reductions: item?.price_reductions
-                ? item?.price_reductions
-                : [],
             new_suppliers: [],
             new_price_reductions: [],
         },
@@ -56,16 +53,16 @@ export const UpdateItemModal = ({ isOpen, onClose, item }) => {
 
             price: Yup.number().required('this field price is required'),
         }),
-
         onSubmit: async (values, actions) => {
-            values.new_suppliers.push(selectedSupplier)
-            values.new_price_reductions.push(selectedPriceReduction)
+            values.new_suppliers = [selectedSupplier]
+            values.new_price_reductions = [selectedPriceReduction]
+
             executeItemFormularyFunction(values, actions, dispatch, updateItem)
         },
     })
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
+        <Modal isOpen={isOpen} onClose={onClose} size={'2xl'}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Update Item</ModalHeader>
@@ -111,9 +108,10 @@ export const UpdateItemModal = ({ isOpen, onClose, item }) => {
                     </FormControl>
                     {suppliers.length > 0 ? (
                         <CustomSelect
+                            placeholder={'Select a Supplier'}
                             data={transformSuppliersTofilterdata(
                                 suppliers,
-                                item?.suppliers ? item?.suppliers : [],
+                                item?.suppliers,
                             )}
                             setSelected={setSelectSupplier}
                         />
@@ -122,6 +120,7 @@ export const UpdateItemModal = ({ isOpen, onClose, item }) => {
                     )}
                     {priceReductions.length > 0 ? (
                         <CustomSelect
+                            placeholder={'Select a Discount'}
                             data={transformPriceReductionsToFilterData(
                                 priceReductions,
                                 item?.price_reductions
@@ -140,6 +139,7 @@ export const UpdateItemModal = ({ isOpen, onClose, item }) => {
                         colorScheme="purple"
                         mr={3}
                         onClick={formik.submitForm}
+                        type="button"
                     >
                         Save
                     </Button>

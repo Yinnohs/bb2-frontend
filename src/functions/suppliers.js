@@ -1,14 +1,12 @@
 export const transformSuppliersTofilterdata = (suppliers, itemSuppliers)=>{
-    return suppliers.map((supplier)=>{
+    const suppliersIds = suppliers.map((element)=> element.supplier_id)
+    const itemSuppliersIds = itemSuppliers.map((element)=> element.supplier_id)
+    const intersecion = suppliersIds.filter((id)=> itemSuppliersIds.indexOf(id) > -1)
 
-        for(const itemSupplier of itemSuppliers){
-            if(supplier.supplier_id === itemSupplier.supplier_id){
-                return{
-                    value: supplier.supplier_id,
-                    label: `${supplier.name}`
-                }
-            }
+    return suppliers.reduce((supplier)=>{
+        console.log(supplier)
+        if(intersecion.includes(supplier.supplier_id)){
+            return supplier
         }
-       
-    })
+    },[])
 } 

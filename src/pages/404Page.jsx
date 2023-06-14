@@ -9,7 +9,7 @@ export const NotFoundPage = () => {
             textAlign="center"
             py={10}
             px={6}
-            h={'86%'}
+            h={'100vh'}
             display={'flex'}
             flexDirection={'column'}
             justifyContent={'center'}

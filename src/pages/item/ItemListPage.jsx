@@ -15,17 +15,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     selectAllItems,
     selectItemStatus,
-    selectItemsError,
     fetchAllItems,
 } from '../../features/items/itemsSlice'
 import { fetchAllpriceReductions } from '../../features/price-reductions/priceReductionSlice'
-import { fetchAllsuppliers } from '../../features'
+import { fetchAllsuppliers, selectAllSuppliers } from '../../features'
 
 export const ItemListPage = () => {
     const dispatch = useDispatch()
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
     const items = useSelector(selectAllItems)
     const itemsStatus = useSelector(selectItemStatus)
+    const { suppliers } = useSelector(selectAllSuppliers)
 
     const { isOpen, onClose, onOpen } = useDisclosure()
 
@@ -33,13 +33,19 @@ export const ItemListPage = () => {
         dispatch(fetchAllItems(event.target.value))
     }
 
+    const initApp = (dispatch) => {
+        Promise.all([
+            dispatch(fetchAllItems()),
+            dispatch(fetchAllpriceReductions()),
+            dispatch(fetchAllsuppliers()),
+        ])
+    }
+
     useEffect(() => {
         if (itemsStatus === 'idle') {
-            dispatch(fetchAllItems())
-            dispatch(fetchAllpriceReductions())
-            dispatch(fetchAllsuppliers())
+            initApp(dispatch)
         }
-    }, [itemsStatus, dispatch, items])
+    }, [itemsStatus, items, dispatch])
 
     return (
         <Box w={'100%'} minH={'100%'}>
