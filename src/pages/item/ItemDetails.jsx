@@ -28,13 +28,15 @@ export const ItemDetails = () => {
     const { id } = useParams()
     const itemId = parseInt(id, 10)
     const items = useSelector(selectAllItems)
-    const [item, setItem] = useState({})
+    const [item, setItem] = useState(
+        items.find((item) => item.item_id === itemId),
+    )
     const { isOpen, onClose, onOpen } = useDisclosure()
 
     useEffect(() => {
         const item = items.find((item) => item.item_id === itemId)
         setItem(item)
-    }, [item])
+    }, [onClose])
 
     return (
         <Container maxW={'7xl'} minH={'100vh'}>
@@ -67,7 +69,7 @@ export const ItemDetails = () => {
                             boxShadow: 'lg',
                         }}
                         onClick={onOpen}
-                        disabled={item.item_state !== 'Active'}
+                        disabled={item?.item_state !== 'Active'}
                     >
                         Deactivate Item
                     </Button>
@@ -152,7 +154,7 @@ export const ItemDetails = () => {
                         <Text>
                             {' '}
                             Created by :{' '}
-                            {` ${item?.creator.name} ${item?.creator.surname}`}
+                            {` ${item?.creator?.name} ${item?.creator?.surname}`}
                         </Text>
                     </Stack>
                 </Stack>

@@ -86,20 +86,17 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                         >
                             {`${item?.creator?.name} ${item?.creator?.surname}`}
                         </Text>
-                        <Badge
-                            fontSize={'sm'}
-                            borderRadius={5}
-                            textColor={'purple.400'}
-                            backgroundColor={useColorModeValue(
-                                'white',
-                                'gray.800',
-                            )}
-                            border={'1px'}
-                            borderColor={'purple.400'}
-                        >
-                            {item?.item_state}
-                        </Badge>
                     </Stack>
+                    <Badge
+                        fontSize={'sm'}
+                        borderRadius={5}
+                        textColor={'purple.400'}
+                        backgroundColor={useColorModeValue('white', 'gray.800')}
+                        border={'1px'}
+                        borderColor={'purple.400'}
+                    >
+                        {item?.item_state}
+                    </Badge>
                     <Stack direction={'row'} align={'center'}>
                         <Text fontWeight={800} fontSize={'xl'}>
                             {item?.price}€
