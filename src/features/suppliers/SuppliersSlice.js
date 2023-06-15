@@ -20,7 +20,7 @@ export const fetchAllsuppliers = createAsyncThunk(
     },
 )
 
-export const createSupplier = createAsyncThunk(
+export const createSupplierRequest = createAsyncThunk(
     'suppliers/create',
     async (payload, { rejectWithValue }) => {
         try {
@@ -75,16 +75,16 @@ const supplierSlice = createSlice({
                 state.status = 'rejected'
                 state.error = action.error.message
             })
-            .addCase(createSupplier.pending, (state) => {
+            .addCase(createSupplierRequest.pending, (state) => {
                 state.status = 'loading'
             })
 
-            .addCase(createSupplier.fulfilled, (state) => {
+            .addCase(createSupplierRequest.fulfilled, (state) => {
                 state.status = 'succeded'
                 state.status = 'idle'
             })
 
-            .addCase(createSupplier.rejected, (state, action) => {
+            .addCase(createSupplierRequest.rejected, (state, action) => {
                 state.status = 'rejected'
                 state.error = action.error.message
             })
