@@ -1,7 +1,7 @@
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import { IconButton, Td, Tr } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-export const UserTableRow = ({
+export const SupplierTableRow = ({
     supplier,
     openDeleteModal,
     openUpdateModal,
@@ -38,7 +38,7 @@ export const UserTableRow = ({
         </>
     )
 }
-UserTableRow.propTypes = {
+SupplierTableRow.propTypes = {
     supplier: PropTypes.object,
     openDeleteModal: PropTypes.func,
     openUpdateModal: PropTypes.func,

@@ -9,12 +9,12 @@ import {
     Tr,
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { UserTableRowList } from './UserTableRowList'
 import { useEffect, useState } from 'react'
 import { fetchAllsuppliers } from '../../features'
 import { useModal } from '../../hooks/modal/useModal'
+import { SupplierTableRowList } from './SupplierTableRowList'
 
-export const UserTable = () => {
+export const SupplierTable = () => {
     const { users: suppliers, status } = useSelector((state) => state.suppliers)
     const dispatch = useDispatch()
     const [selectedSupplierId, setSelectedSupplierId] = useState(null)
@@ -52,8 +52,8 @@ export const UserTable = () => {
                     </Thead>
                     <Tbody>
                         {suppliers?.length > 0 ? (
-                            <UserTableRowList
-                                users={suppliers}
+                            <SupplierTableRowList
+                                suppliers={suppliers}
                                 openDeleteModal={openDeleteModalFunction}
                                 openUpdateModal={openUpdateModalFunction}
                             />
