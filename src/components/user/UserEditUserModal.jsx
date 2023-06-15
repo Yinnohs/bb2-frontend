@@ -88,7 +88,11 @@ export const UserEditUserModal = ({ isOpen, onClose, user }) => {
                     )}
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme="purple" mr={3} onClick={() => {}}>
+                    <Button
+                        colorScheme="purple"
+                        mr={3}
+                        onClick={formik.handleSubmit}
+                    >
                         Update
                     </Button>
                     <Button onClick={() => formik.handleReset()}>Cancel</Button>
