@@ -3,14 +3,18 @@ import {
     TableCaption,
     TableContainer,
     Tbody,
-    Td,
     Tfoot,
     Th,
     Thead,
     Tr,
 } from '@chakra-ui/react'
+import { useSelector } from 'react-redux'
+import { selectAllUser } from '../../features'
+import { UserTableRow } from './UserTableRow'
 
 export const UserTable = () => {
+    const users = useSelector(selectAllUser)
+
     return (
         <TableContainer w={'86%'}>
             <Table colorScheme="purple" variant="striped">
@@ -26,17 +30,16 @@ export const UserTable = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    <Tr>
-                        <Td>inches</Td>
-                        <Td>millimetres (mm)</Td>
-                        <Td isNumeric>25.4</Td>
-                    </Tr>
+                    {users?.length > 0 ? <UserTableRow users={users} /> : <></>}
                 </Tbody>
                 <Tfoot>
                     <Tr>
-                        <Th>To convert</Th>
-                        <Th>into</Th>
-                        <Th isNumeric>multiply by</Th>
+                        <Th> User Id </Th>
+                        <Th> name </Th>
+                        <Th> surname </Th>
+                        <Th> email </Th>
+                        <Th> Created At </Th>
+                        <Th> Role </Th>
                     </Tr>
                 </Tfoot>
             </Table>
