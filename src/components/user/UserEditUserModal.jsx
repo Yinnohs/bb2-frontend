@@ -24,7 +24,7 @@ export const UserEditUserModal = ({ isOpen, onClose, user }) => {
 
     let formik = useFormik({
         initialValues: {
-            user_id: 0,
+            user_id: user?.user_id,
             name: '',
             surname: '',
             password: '',

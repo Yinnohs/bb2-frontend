@@ -48,7 +48,7 @@ export const ItemListPage = () => {
     }, [itemsStatus, items, dispatch])
 
     return (
-        <Box w={'100%'} minH={'100%'}>
+        <Box w={'100%'} minH={'100vh'}>
             <Flex w={'100%'} minH={'100%'} direction={'column'}>
                 <Flex
                     w={'100%'}
