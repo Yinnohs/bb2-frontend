@@ -9,11 +9,13 @@ import {
     Tr,
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
-import { selectAllUser } from '../../features'
 import { UserTableRow } from './UserTableRow'
+import { useEffect } from 'react'
 
 export const UserTable = () => {
-    const users = useSelector(selectAllUser)
+    const { users, status, error } = useSelector((state) => state.users)
+
+    useEffect(() => {}, [status])
 
     return (
         <TableContainer w={'86%'}>
