@@ -1,8 +1,7 @@
 import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
+import { UserTable } from '../../../components/user/UserTable'
 
 export const UserPage = () => {
-    const navigation = useNavigate()
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
     return (
         <Box minH={'100vh'} w={'100%'}>
@@ -18,8 +17,9 @@ export const UserPage = () => {
                     border={'1px'}
                     backgroundColor={useColorModeValue('white', 'gray.900')}
                 >
-                    Create an Item + 1
+                    Create an User + 1
                 </Button>
+                <UserTable />
             </Flex>
         </Box>
     )
