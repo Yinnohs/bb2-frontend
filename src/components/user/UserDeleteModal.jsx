@@ -27,13 +27,22 @@ export const UserDeleteModal = ({ isOpen, onClose, userId }) => {
         <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Create An User</ModalHeader>
+                <ModalHeader>Delete An User</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody pb={6}>
-                    <Text size={'xl'}>
-                        Are you sure you want to delete the user
+                <ModalBody
+                    pb={6}
+                    gap={10}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                >
+                    <Text fontSize={'xl'}>
+                        Are you sure you want to delete the user with email :
                     </Text>
-                    <Text>{currentUser?.email}</Text>
+                    <Text fontWeight={'bold'} color={'purple.400'}>
+                        {currentUser?.email}
+                    </Text>
                 </ModalBody>
                 <ModalFooter>
                     <Button colorScheme="purple" mr={3} onClick={deleteUser}>
