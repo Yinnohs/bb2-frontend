@@ -9,7 +9,7 @@ import {
     Tr,
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
-import { UserTableRow } from './UserTableRow'
+import { UserTableRowList } from './UserTableRowList'
 import { useEffect } from 'react'
 
 export const UserTable = () => {
@@ -32,7 +32,11 @@ export const UserTable = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {users?.length > 0 ? <UserTableRow users={users} /> : <></>}
+                    {users?.length > 0 ? (
+                        <UserTableRowList users={users} />
+                    ) : (
+                        <></>
+                    )}
                 </Tbody>
                 <Tfoot>
                     <Tr>

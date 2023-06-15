@@ -63,7 +63,6 @@ const userSlice = createSlice({
         .addCase(fetchAllUsers.fulfilled, (state,action)=>{
             state.status = 'succeded'
             const payload = action.payload
-            console.log({payload});
             state.users = payload
         })
 

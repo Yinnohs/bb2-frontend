@@ -55,8 +55,6 @@ export const ItemDetails = () => {
         setItem(item)
     }, [closeUpdate, closeDeactivate])
 
-    console.log(item?.price_reductions)
-
     return (
         <Container maxW={'7xl'} minH={'100vh'}>
             <SimpleGrid
