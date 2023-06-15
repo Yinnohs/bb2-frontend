@@ -1,4 +1,4 @@
-import { Box, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, List, Text, useColorModeValue } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { PriceReductionSection } from './PriceReductionSection'
 
@@ -12,20 +12,22 @@ export const ItemDetailsPriceReductions = ({ priceReductions }) => {
                 textTransform={'uppercase'}
                 mb={'4'}
             >
-                Discount Applied
+                Discounts Details
             </Text>
-            {priceReductions?.length > 0 ? (
-                priceReductions.map((priceReduction, i) => {
-                    return (
-                        <PriceReductionSection
-                            priceReduction={priceReduction}
-                            key={`price_reduction${i}`}
-                        />
-                    )
-                })
-            ) : (
-                <></>
-            )}
+            <List spacing={2}>
+                {priceReductions?.length > 0 ? (
+                    priceReductions.map((priceReduction, i) => {
+                        return (
+                            <PriceReductionSection
+                                priceReduction={priceReduction}
+                                key={`price_reduction${i}`}
+                            />
+                        )
+                    })
+                ) : (
+                    <></>
+                )}
+            </List>
         </Box>
     )
 }

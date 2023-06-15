@@ -18,5 +18,6 @@ export const formatPrice = (price, discount)=>{
     if(price === null || price === undefined || isNaN(price)) return 0
     if(discount === 1 ) return price
     const formattedDiscount = 1 - discount
-    return price * formattedDiscount 
+    const discountedPrice =  (price * formattedDiscount).toFixed(2)
+    return discountedPrice 
 }
