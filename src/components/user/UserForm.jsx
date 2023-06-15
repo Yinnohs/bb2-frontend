@@ -29,7 +29,7 @@ export const UserCreateForm = ({ formik }) => {
                         <Input
                             focusBorderColor="purple.600"
                             type="text"
-                            value={formik.values.name}
+                            value={formik.values?.name}
                             name="name"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -47,7 +47,7 @@ export const UserCreateForm = ({ formik }) => {
                             type="text"
                             name="surname"
                             onChange={formik.handleChange}
-                            value={formik.values.surname}
+                            value={formik.values?.surname}
                         />
                     </FormControl>
                 </Box>
@@ -63,7 +63,7 @@ export const UserCreateForm = ({ formik }) => {
                     type="email"
                     name="email"
                     onChange={formik.handleChange}
-                    value={formik.values.email}
+                    value={formik.values?.email}
                     onBlur={formik.handleBlur}
                 />
                 <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
@@ -77,7 +77,7 @@ export const UserCreateForm = ({ formik }) => {
                 <InputGroup>
                     <Input
                         type={showPassword ? 'text' : 'password'}
-                        value={formik.values.password}
+                        value={formik.values?.password}
                         name="password"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

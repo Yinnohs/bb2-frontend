@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types'
 import { UserTableRow } from './UserTableRow'
-export const UserTableRowList = ({ users, openModal }) => {
+export const UserTableRowList = ({
+    users,
+    openDeleteModal,
+    openUpdateModal,
+}) => {
     return (
         <>
             {users.map((user) => {
@@ -8,7 +12,8 @@ export const UserTableRowList = ({ users, openModal }) => {
                     <UserTableRow
                         key={user?.email}
                         user={user}
-                        openModal={openModal}
+                        openDeleteModal={openDeleteModal}
+                        openUpdateModal={openUpdateModal}
                     />
                 )
             })}
@@ -17,5 +22,6 @@ export const UserTableRowList = ({ users, openModal }) => {
 }
 UserTableRowList.propTypes = {
     users: PropTypes.array,
-    openModal: PropTypes.func,
+    openDeleteModal: PropTypes.func,
+    openUpdateModal: PropTypes.func,
 }

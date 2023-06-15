@@ -25,7 +25,7 @@ export const fetchAllUsers = createAsyncThunk('users/fetchAll', async (_,{reject
 })
 
 
-export const updateUser = createAsyncThunk('users/update', async (payload, {rejectWithValue})=>{
+export const updateUserRequest = createAsyncThunk('users/update', async (payload, {rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
         const {data} = await usersAdminApi.get(`/update`,
@@ -39,7 +39,7 @@ export const updateUser = createAsyncThunk('users/update', async (payload, {reje
     }
 })
 
-export const deleteUserRequest = createAsyncThunk('users/update', async (payload, {rejectWithValue})=>{
+export const deleteUserRequest = createAsyncThunk('users/delete', async (payload, {rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
         const {data} = await usersAdminApi.delete(`/delete/${payload}`,
@@ -80,7 +80,7 @@ const userSlice = createSlice({
         .addCase(registerRequest.fulfilled, (state,)=>{
             state.status = 'idle'
         })
-        
+
         .addCase(deleteUserRequest.pending, (state)=>{
             state.status = 'loading'
         })
@@ -93,8 +93,22 @@ const userSlice = createSlice({
         .addCase(deleteUserRequest.rejected, (state, action)=>{
             state.status = 'rejected'
             state.error = action.error.message
-            
         })
+
+        .addCase(updateUserRequest.pending, (state)=>{
+            state.status = 'loading'
+        })
+
+        .addCase(updateUserRequest.fulfilled, (state,)=>{
+            state.status = 'succeded'
+            state.status = 'idle'
+        })
+
+        .addCase(updateUserRequest.rejected, (state, action)=>{
+            state.status = 'rejected'
+            state.error = action.error.message
+        })
+        
 }})
 
 export const selectAllUser = (state) => state.users.users

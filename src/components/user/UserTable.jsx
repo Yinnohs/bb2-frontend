@@ -14,16 +14,26 @@ import { useEffect, useState } from 'react'
 import { fetchAllUsers } from '../../features'
 import { useModal } from '../../hooks/modal/useModal'
 import { UserDeleteModal } from './UserDeleteModal'
+import { UserEditUserModal } from './UserEditUserModal'
 
 export const UserTable = () => {
     const { users, status } = useSelector((state) => state.users)
     const dispatch = useDispatch()
     const [selectedUserId, setSelectedUserId] = useState(null)
+    const [selectedUser, setSelectedUser] = useState({})
     const [isDeleteModalOpen, openDeleteModal, closeDeleteModal] = useModal()
+    const [isUpdateModalOpen, openUpdateModal, closeUpdateModal] = useModal()
+
     const openDeleteModalFunction = (userId) => {
         setSelectedUserId(userId)
         openDeleteModal()
     }
+
+    const openUpdateModalFunction = (user) => {
+        setSelectedUser(user)
+        openUpdateModal()
+    }
+
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchAllUsers())
@@ -32,7 +42,7 @@ export const UserTable = () => {
 
     return (
         <>
-            <TableContainer w={'60%'}>
+            <TableContainer w={'70%'} minW={'60vw'}>
                 <Table colorScheme="purple" variant="striped">
                     <TableCaption>Current Users on the app</TableCaption>
                     <Thead>
@@ -50,7 +60,8 @@ export const UserTable = () => {
                         {users?.length > 0 ? (
                             <UserTableRowList
                                 users={users}
-                                openModal={openDeleteModalFunction}
+                                openDeleteModal={openDeleteModalFunction}
+                                openUpdateModal={openUpdateModalFunction}
                             />
                         ) : (
                             <></>
@@ -73,6 +84,11 @@ export const UserTable = () => {
                 userId={selectedUserId}
                 isOpen={isDeleteModalOpen}
                 onClose={closeDeleteModal}
+            />
+            <UserEditUserModal
+                isOpen={isUpdateModalOpen}
+                user={selectedUser}
+                onClose={closeUpdateModal}
             />
         </>
     )

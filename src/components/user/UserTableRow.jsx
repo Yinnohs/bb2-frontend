@@ -1,7 +1,7 @@
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import { IconButton, Td, Tr } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-export const UserTableRow = ({ user, openModal }) => {
+export const UserTableRow = ({ user, openDeleteModal, openUpdateModal }) => {
     return (
         <>
             <Tr key={user?.user_id}>
@@ -19,7 +19,7 @@ export const UserTableRow = ({ user, openModal }) => {
                             color: 'red.500',
                             backgroundColor: 'red.200',
                         }}
-                        onClick={() => openModal(user?.user_id)}
+                        onClick={() => openDeleteModal(user?.user_id)}
                         icon={<DeleteIcon />}
                     />
                     <IconButton
@@ -29,7 +29,7 @@ export const UserTableRow = ({ user, openModal }) => {
                             color: 'green.600',
                             backgroundColor: 'green.100',
                         }}
-                        onClick={() => openModal(user?.user_id)}
+                        onClick={() => openUpdateModal(user)}
                         icon={<EditIcon />}
                     />
                 </Td>
@@ -39,5 +39,6 @@ export const UserTableRow = ({ user, openModal }) => {
 }
 UserTableRow.propTypes = {
     user: PropTypes.object,
-    openModal: PropTypes.func,
+    openDeleteModal: PropTypes.func,
+    openUpdateModal: PropTypes.func,
 }
