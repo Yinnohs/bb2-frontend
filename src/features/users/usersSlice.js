@@ -30,7 +30,6 @@ export const fetchAllUsers = createAsyncThunk(
 export const updateUserRequest = createAsyncThunk(
     'users/update',
     async (payload, { rejectWithValue }) => {
-        console.log({ payload })
         try {
             const token = localStorage.getItem('at')
             const { data } = await usersApi.put(`/update`, payload, {
@@ -107,11 +106,13 @@ const userSlice = createSlice({
             .addCase(updateUserRequest.fulfilled, (state) => {
                 state.status = 'succeded'
                 state.status = 'idle'
+                console.log('updated')
             })
 
             .addCase(updateUserRequest.rejected, (state, action) => {
                 state.status = 'rejected'
                 state.error = action.error.message
+                console.log(action.error.message)
             })
     },
 })
