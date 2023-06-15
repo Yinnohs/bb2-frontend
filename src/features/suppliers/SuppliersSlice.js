@@ -39,6 +39,7 @@ export const updateSupplierRequest = createAsyncThunk(
     'suppliers/update',
     async (payload, { rejectWithValue }) => {
         try {
+            console.log({ payload })
             const token = localStorage.getItem('at')
             const { data } = await suppliersAdminApi.put(`/update`, payload, {
                 headers: { Authorization: `Bearer ${token}` },
@@ -69,13 +70,11 @@ const supplierSlice = createSlice({
                 state.status = 'succeded'
                 const payload = action.payload
                 state.suppliers = payload
-                console.log({ payload })
             })
 
             .addCase(fetchAllsuppliers.rejected, (state, action) => {
                 state.status = 'rejected'
                 state.error = action.error.message
-                console.log(action.error.message)
             })
             .addCase(createSupplierRequest.pending, (state) => {
                 state.status = 'loading'

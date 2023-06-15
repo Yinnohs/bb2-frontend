@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import { fetchAllsuppliers } from '../../features'
 import { useModal } from '../../hooks/modal/useModal'
 import { SupplierTableRowList } from './SupplierTableRowList'
+import { SupplierEditModal } from './SupplierEditModal'
 
 export const SupplierTable = () => {
     const { suppliers, status } = useSelector((state) => state.suppliers)
@@ -70,6 +71,11 @@ export const SupplierTable = () => {
                     </Tfoot>
                 </Table>
             </TableContainer>
+            <SupplierEditModal
+                supplier={selectedSupplier}
+                isOpen={isUpdateModalOpen}
+                onClose={closeUpdateModal}
+            />
         </>
     )
 }

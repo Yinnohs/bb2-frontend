@@ -12,56 +12,73 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { CustomAlert } from '../alert'
 import { UserCreateForm } from './UserForm'
-import { updateSupplierRequest } from '../../features'
+import { updateUserRequest } from '../../features'
 import { authenticateFunction } from '../../functions'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 
-export const UserEditUserModal = ({ isOpen, onClose, supplier }) => {
+export const UserEditUserModal = ({ isOpen, onClose, user }) => {
     const { status, error } = useSelector((state) => state.users)
     const dispatch = useDispatch()
 
-    const formik = useFormik({
+    let formik = useFormik({
         initialValues: {
-            supplier_id: 0,
+            user_id: 0,
             name: '',
-            country: '',
+            surname: '',
+            password: '',
+            email: '',
         },
         validationSchema: Yup.object({
-            name: Yup.string()
-                .required('name required')
-                .min(
-                    4,
-                    'The name field should have at least 4 characters long',
-                ),
-            country: Yup.string().required('countryl required'),
+            name: Yup.string().min(
+                4,
+                'The name field should have at least 4 characters long',
+            ),
+            email: Yup.string().email('not valid email'),
+            password: Yup.string().min(
+                6,
+                'The password should have at least 2 characters',
+            ),
         }),
         onSubmit: async (values, actions) => {
             authenticateFunction(
                 values,
                 actions,
                 dispatch,
-                updateSupplierRequest,
+                updateUserRequest,
                 status,
                 error,
             )
             onClose()
         },
+        onReset: (_, actions) => {
+            actions.setValues({
+                user_id: 0,
+                name: '',
+                surname: '',
+                password: '',
+                email: '',
+            })
+            onClose()
+        },
     })
+
     useEffect(() => {
         formik.setValues({
-            supplier_id: supplier?.supplier_id,
-            name: supplier?.name,
-            country: supplier?.country,
+            user_id: user?.user_id,
+            name: user?.name,
+            surname: user?.surname,
+            password: '',
+            email: user?.email,
         })
-    }, [supplier])
+    }, [user])
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Edit the supplier: {supplier?.name}</ModalHeader>
+                <ModalHeader>Edit the user: {user?.email}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
                     {formik.values.user_id ? (
@@ -98,5 +115,5 @@ export const UserEditUserModal = ({ isOpen, onClose, supplier }) => {
 UserEditUserModal.propTypes = {
     isOpen: PropTypes.bool,
     onClose: PropTypes.func,
-    supplier: PropTypes.object,
+    user: PropTypes.object,
 }
