@@ -11,7 +11,7 @@ export const UserPage = () => {
 
     useEffect(() => {
         if (status === 'idle') {
-            dispatch(fetchAllUsers)
+            dispatch(fetchAllUsers())
         }
     }, [status])
     return (

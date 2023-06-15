@@ -1,6 +1,6 @@
 import { Td, Tr } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-export const UserTableRow = ({ users }) => {
+export const UserTableRowList = ({ users }) => {
     return (
         <>
             {users.map((user) => {
@@ -20,6 +20,6 @@ export const UserTableRow = ({ users }) => {
         </>
     )
 }
-UserTableRow.propTypes = {
+UserTableRowList.propTypes = {
     users: PropTypes.array,
 }
