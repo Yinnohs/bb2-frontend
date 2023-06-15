@@ -39,6 +39,19 @@ export const updateUser = createAsyncThunk('users/update', async (payload, {reje
     }
 })
 
+export const deleteUserRequest = createAsyncThunk('users/update', async (payload, {rejectWithValue})=>{
+    try {
+        const token = localStorage.getItem('at')
+        const {data} = await usersAdminApi.delete(`/delete/${payload}`,
+        {
+            headers:{Authorization:`Bearer ${token}`,
+        }})
+        return data
+    } catch (error) {
+        return rejectWithValue(error.message)
+    }
+})
+
 const userSlice = createSlice({
     name: "users",
     initialState,
@@ -67,8 +80,22 @@ const userSlice = createSlice({
         .addCase(registerRequest.fulfilled, (state,)=>{
             state.status = 'idle'
         })
-    }
-})
+        
+        .addCase(deleteUserRequest.pending, (state)=>{
+            state.status = 'loading'
+        })
+
+        .addCase(deleteUserRequest.fulfilled, (state,)=>{
+            state.status = 'succeded'
+            state.status = 'idle'
+        })
+
+        .addCase(deleteUserRequest.rejected, (state, action)=>{
+            state.status = 'rejected'
+            state.error = action.error.message
+            
+        })
+}})
 
 export const selectAllUser = (state) => state.users.users
 export default userSlice.reducer
