@@ -11,31 +11,35 @@ import {
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { CustomAlert } from '../alert'
-import { UserCreateForm } from './UserForm'
+import { SupplierCreateForm } from './SupplierForm'
 import { updateSupplierRequest } from '../../features'
 import { authenticateFunction } from '../../functions'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 
-export const UserEditUserModal = ({ isOpen, onClose, supplier }) => {
-    const { status, error } = useSelector((state) => state.users)
+export const SupplierEditModal = ({ isOpen, onClose, Supplier }) => {
+    const { status, error } = useSelector((state) => state.Suppliers)
     const dispatch = useDispatch()
 
-    const formik = useFormik({
+    let formik = useFormik({
         initialValues: {
-            supplier_id: 0,
+            Supplier_id: Supplier?.Supplier_id,
             name: '',
-            country: '',
+            surname: '',
+            password: '',
+            email: '',
         },
         validationSchema: Yup.object({
-            name: Yup.string()
-                .required('name required')
-                .min(
-                    4,
-                    'The name field should have at least 4 characters long',
-                ),
-            country: Yup.string().required('countryl required'),
+            name: Yup.string().min(
+                4,
+                'The name field should have at least 4 characters long',
+            ),
+            email: Yup.string().email('not valid email'),
+            password: Yup.string().min(
+                6,
+                'The password should have at least 2 characters',
+            ),
         }),
         onSubmit: async (values, actions) => {
             authenticateFunction(
@@ -48,24 +52,37 @@ export const UserEditUserModal = ({ isOpen, onClose, supplier }) => {
             )
             onClose()
         },
+        onReset: (_, actions) => {
+            actions.setValues({
+                Supplier_id: 0,
+                name: '',
+                surname: '',
+                password: '',
+                email: '',
+            })
+            onClose()
+        },
     })
+
     useEffect(() => {
         formik.setValues({
-            supplier_id: supplier?.supplier_id,
-            name: supplier?.name,
-            country: supplier?.country,
+            Supplier_id: Supplier?.Supplier_id,
+            name: Supplier?.name,
+            surname: Supplier?.surname,
+            password: '',
+            email: Supplier?.email,
         })
-    }, [supplier])
+    }, [Supplier])
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Edit the supplier: {supplier?.name}</ModalHeader>
+                <ModalHeader>Edit the Supplier: {Supplier?.email}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
-                    {formik.values.user_id ? (
-                        <UserCreateForm formik={formik} />
+                    {formik.values.Supplier_id ? (
+                        <SupplierCreateForm formik={formik} />
                     ) : (
                         <></>
                     )}
@@ -84,7 +101,7 @@ export const UserEditUserModal = ({ isOpen, onClose, supplier }) => {
                     <CustomAlert
                         label={'Oh No!: '}
                         reason={
-                            'Somethin happened when updating the user the user'
+                            'Somethin happened when updating the Supplier the Supplier'
                         }
                     />
                 ) : (
@@ -95,8 +112,8 @@ export const UserEditUserModal = ({ isOpen, onClose, supplier }) => {
     )
 }
 
-UserEditUserModal.propTypes = {
+SupplierEditModal.propTypes = {
     isOpen: PropTypes.bool,
     onClose: PropTypes.func,
-    supplier: PropTypes.object,
+    Supplier: PropTypes.object,
 }

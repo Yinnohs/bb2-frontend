@@ -35,7 +35,7 @@ export const createSupplierRequest = createAsyncThunk(
     },
 )
 
-export const updateSupplier = createAsyncThunk(
+export const updateSupplierRequest = createAsyncThunk(
     'suppliers/update',
     async (payload, { rejectWithValue }) => {
         try {
