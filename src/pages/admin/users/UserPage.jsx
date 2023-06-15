@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { fetchAllUsers } from '../../../features'
 import { CustomAlert } from '../../../components/alert'
+import { UserCreateModal } from '../../../components/user/UserCreateModal'
+import { useModal } from '../../../hooks/modal/useModal'
 
 export const UserPage = () => {
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
     const dispatch = useDispatch()
     const { status, error } = useSelector((state) => state.users)
+    const [isCreateModalOpen, openCreateUserModal, closeCreateModal] =
+        useModal()
 
     useEffect(() => {
         if (status === 'idle') {
@@ -28,6 +32,7 @@ export const UserPage = () => {
                     borderColor={textBorderValue}
                     border={'1px'}
                     backgroundColor={useColorModeValue('white', 'gray.900')}
+                    onClick={openCreateUserModal}
                 >
                     Create an User + 1
                 </Button>
@@ -42,6 +47,10 @@ export const UserPage = () => {
                 ) : (
                     <></>
                 )}
+                <UserCreateModal
+                    isOpen={isCreateModalOpen}
+                    onClose={closeCreateModal}
+                />
             </Flex>
         </Box>
     )

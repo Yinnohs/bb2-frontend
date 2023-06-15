@@ -8,7 +8,7 @@ import {
     ModalHeader,
     ModalOverlay,
 } from '@chakra-ui/react'
-import PropTypes from './propTypes'
+import PropTypes from 'prop-types'
 import { registerRequest } from '../../features'
 import { authenticateFunction } from '../../functions'
 import { useFormik } from 'formik'
