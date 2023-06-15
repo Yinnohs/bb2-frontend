@@ -13,7 +13,7 @@ import { UserTableRowList } from './UserTableRowList'
 import { useEffect } from 'react'
 
 export const UserTable = () => {
-    const { users, status, error } = useSelector((state) => state.users)
+    const { users, status } = useSelector((state) => state.users)
 
     useEffect(() => {}, [status])
 

@@ -90,9 +90,9 @@ const priceReductionslice = createSlice({
             state.status = 'loading'
         })
 
-        .addCase(updatePriceReduction, (state,action)=>{
+        .addCase(updatePriceReduction, (state,)=>{
             state.status = 'succeded'
-            const payload = action.payload
+            state.status = 'idle'
         })
 
         .addCase(updatePriceReduction.rejected, (state, action)=>{

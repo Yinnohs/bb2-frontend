@@ -3,17 +3,18 @@ import { UserTable } from '../../../components/user/UserTable'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { fetchAllUsers } from '../../../features'
+import { CustomAlert } from '../../../components/alert'
 
 export const UserPage = () => {
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
     const dispatch = useDispatch()
-    const { users, status, error } = useSelector((state) => state.users)
+    const { status, error } = useSelector((state) => state.users)
 
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchAllUsers())
         }
-    }, [status])
+    }, [status, dispatch])
     return (
         <Box minH={'100vh'} w={'100%'} mt={20}>
             <Flex
@@ -31,6 +32,16 @@ export const UserPage = () => {
                     Create an User + 1
                 </Button>
                 <UserTable />
+                {error !== null ? (
+                    <CustomAlert
+                        label={'OH no!'}
+                        reason={
+                            'Something strange happened while reaching the data server'
+                        }
+                    />
+                ) : (
+                    <></>
+                )}
             </Flex>
         </Box>
     )
