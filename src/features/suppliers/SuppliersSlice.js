@@ -39,9 +39,23 @@ export const updateSupplierRequest = createAsyncThunk(
     'suppliers/update',
     async (payload, { rejectWithValue }) => {
         try {
-            console.log({ payload })
             const token = localStorage.getItem('at')
             const { data } = await suppliersAdminApi.put(`/update`, payload, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            return data
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
+    },
+)
+
+export const deleteSupplierRequest = createAsyncThunk(
+    'suppliers/delete',
+    async (id, { rejectWithValue }) => {
+        try {
+            const token = localStorage.getItem('at')
+            const { data } = await suppliersAdminApi.delete(`/delete/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             return data
@@ -100,6 +114,20 @@ const supplierSlice = createSlice({
             })
 
             .addCase(updateSupplierRequest.rejected, (state, action) => {
+                state.status = 'rejected'
+                state.error = action.error.message
+            })
+
+            .addCase(deleteSupplierRequest.pending, (state) => {
+                state.status = 'loading'
+            })
+
+            .addCase(deleteSupplierRequest.fulfilled, (state) => {
+                state.status = 'succeded'
+                state.status = 'idle'
+            })
+
+            .addCase(deleteSupplierRequest.rejected, (state, action) => {
                 state.status = 'rejected'
                 state.error = action.error.message
             })

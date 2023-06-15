@@ -14,6 +14,7 @@ import { fetchAllsuppliers } from '../../features'
 import { useModal } from '../../hooks/modal/useModal'
 import { SupplierTableRowList } from './SupplierTableRowList'
 import { SupplierEditModal } from './SupplierEditModal'
+import { SupplierDeleteModal } from './SupplierDeleteModal'
 
 export const SupplierTable = () => {
     const { suppliers, status } = useSelector((state) => state.suppliers)
@@ -75,6 +76,11 @@ export const SupplierTable = () => {
                 supplier={selectedSupplier}
                 isOpen={isUpdateModalOpen}
                 onClose={closeUpdateModal}
+            />
+            <SupplierDeleteModal
+                supplierId={selectedSupplierId}
+                isOpen={isDeleteModalOpen}
+                onClose={closeDeleteModal}
             />
         </>
     )
