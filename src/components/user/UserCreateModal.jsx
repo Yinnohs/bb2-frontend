@@ -15,7 +15,7 @@ import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import { CustomAlert } from '../alert'
-import { UserCreateForm } from './userCreateForm'
+import { UserCreateForm } from './UserForm'
 
 export const UserCreateModal = ({ isOpen, onClose }) => {
     const { status, error } = useSelector((state) => state.auth)

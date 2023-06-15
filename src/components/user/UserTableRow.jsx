@@ -1,4 +1,4 @@
-import { DeleteIcon } from '@chakra-ui/icons'
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import { IconButton, Td, Tr } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 export const UserTableRow = ({ user, openModal }) => {
@@ -11,7 +11,7 @@ export const UserTableRow = ({ user, openModal }) => {
                 <Td>{user?.email}</Td>
                 <Td>{user?.creation_date}</Td>
                 <Td>{user?.roles[0]?.role}</Td>
-                <Td>
+                <Td gap={5} display={'flex'} justifyContent={'space-around'}>
                     <IconButton
                         colorScheme="purple"
                         aria-label="Search database"
@@ -21,6 +21,16 @@ export const UserTableRow = ({ user, openModal }) => {
                         }}
                         onClick={() => openModal(user?.user_id)}
                         icon={<DeleteIcon />}
+                    />
+                    <IconButton
+                        colorScheme="purple"
+                        aria-label="Search database"
+                        _hover={{
+                            color: 'green.600',
+                            backgroundColor: 'green.100',
+                        }}
+                        onClick={() => openModal(user?.user_id)}
+                        icon={<EditIcon />}
                     />
                 </Td>
             </Tr>
