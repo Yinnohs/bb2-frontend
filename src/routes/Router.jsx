@@ -8,7 +8,7 @@ import {
     ItemListPage,
     ItemDetails,
 } from '../pages'
-import { AdminPanel } from '../pages/admin'
+import { AdminPanel, UserPage } from '../pages/admin'
 
 export const Router = () => {
     return (
@@ -25,6 +25,7 @@ export const Router = () => {
                         element={<ItemDetails />}
                     />
                     <Route path="/admin" element={<AdminPanel />} />
+                    <Route path="/admin/users/" element={<UserPage />} />
                     <Route
                         path="*"
                         element={<Navigate to="/error" replace />}

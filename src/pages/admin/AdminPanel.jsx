@@ -15,16 +15,10 @@ export const AdminPanel = () => {
                 gap={6}
                 scrollBehavior={'smooth'}
             >
-                <AdminSelectionCard
-                    label={'Suppliers'}
-                    url={'/admin/suppliers'}
-                />
-                <AdminSelectionCard
-                    label={'Price Reductions'}
-                    url={'/admin/price-reductions'}
-                />
-                <AdminSelectionCard label={'Users'} url={'/admin/users'} />
-                <AdminSelectionCard label={'Items'} url={'/admin/items'} />
+                <AdminSelectionCard label={'Suppliers'} url={'/suppliers/'} />
+                <AdminSelectionCard label={'Discounts'} url={'/discounts/'} />
+                <AdminSelectionCard label={'Users'} url={'/users/'} />
+                <AdminSelectionCard label={'Items'} url={'/items/'} />
             </Grid>
         </Box>
     )
