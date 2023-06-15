@@ -3,6 +3,10 @@ import { useSelector } from 'react-redux'
 import { CustomAlert } from '../../../components/alert'
 import { useModal } from '../../../hooks/modal/useModal'
 import { useEffect } from 'react'
+import {
+    SupplierCreateModal,
+    SupplierTable,
+} from '../../../components/suppliers'
 
 export const SupplierPage = () => {
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
@@ -28,6 +32,7 @@ export const SupplierPage = () => {
                 >
                     Create a Supplier + 1
                 </Button>
+                <SupplierTable />
                 {error !== null ? (
                     <CustomAlert
                         label={'OH no!'}
@@ -39,6 +44,10 @@ export const SupplierPage = () => {
                     <></>
                 )}
             </Flex>
+            <SupplierCreateModal
+                isOpen={isCreateModalOpen}
+                onClose={closeCreateModal}
+            />
         </Box>
     )
 }

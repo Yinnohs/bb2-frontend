@@ -69,11 +69,13 @@ const supplierSlice = createSlice({
                 state.status = 'succeded'
                 const payload = action.payload
                 state.suppliers = payload
+                console.log({ payload })
             })
 
             .addCase(fetchAllsuppliers.rejected, (state, action) => {
                 state.status = 'rejected'
                 state.error = action.error.message
+                console.log(action.error.message)
             })
             .addCase(createSupplierRequest.pending, (state) => {
                 state.status = 'loading'

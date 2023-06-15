@@ -15,7 +15,7 @@ import { useModal } from '../../hooks/modal/useModal'
 import { SupplierTableRowList } from './SupplierTableRowList'
 
 export const SupplierTable = () => {
-    const { users: suppliers, status } = useSelector((state) => state.suppliers)
+    const { suppliers, status } = useSelector((state) => state.suppliers)
     const dispatch = useDispatch()
     const [selectedSupplierId, setSelectedSupplierId] = useState(null)
     const [selectedSupplier, setSelectedSupplier] = useState({})

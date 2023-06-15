@@ -15,10 +15,10 @@ import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import { CustomAlert } from '../alert'
-import { UserCreateForm } from './UserForm'
+import { SupplierForm } from './SupplierForm'
 
-export const UserCreateModal = ({ isOpen, onClose }) => {
-    const { status, error } = useSelector((state) => state.auth)
+export const SupplierCreateModal = ({ isOpen, onClose }) => {
+    const { status, error } = useSelector((state) => state.suppliers)
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
@@ -32,7 +32,7 @@ export const UserCreateModal = ({ isOpen, onClose }) => {
                     4,
                     'The name field should have at least 4 characters long',
                 ),
-            country: Yup.string().required('email required'),
+            country: Yup.string().required('countryl required'),
         }),
         onSubmit: async (values, actions) => {
             authenticateFunction(
@@ -53,7 +53,7 @@ export const UserCreateModal = ({ isOpen, onClose }) => {
                 <ModalHeader>Create A Supplier</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
-                    <UserCreateForm formik={formik} />
+                    <SupplierForm formik={formik} />
                 </ModalBody>
                 <ModalFooter>
                     <Button
@@ -78,7 +78,7 @@ export const UserCreateModal = ({ isOpen, onClose }) => {
     )
 }
 
-UserCreateModal.propTypes = {
+SupplierCreateModal.propTypes = {
     isOpen: PropTypes.bool,
     onClose: PropTypes.func,
 }

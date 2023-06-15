@@ -7,11 +7,11 @@ export const SupplierTableRowList = ({
 }) => {
     return (
         <>
-            {suppliers.map((Supplier) => {
+            {suppliers.map((supplier) => {
                 return (
                     <SupplierTableRow
-                        key={Supplier?.email}
-                        Supplier={Supplier}
+                        key={supplier?.name}
+                        supplier={supplier}
                         openDeleteModal={openDeleteModal}
                         openUpdateModal={openUpdateModal}
                     />
