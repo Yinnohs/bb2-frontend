@@ -11,10 +11,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { UserTableRowList } from './UserTableRowList'
 import { useEffect, useState } from 'react'
-import { fetchAllUsers, fetchAllsuppliers } from '../../features'
+import { fetchAllsuppliers } from '../../features'
 import { useModal } from '../../hooks/modal/useModal'
-import { UserDeleteModal } from './UserDeleteModal'
-import { UserEditUserModal } from './UserEditUserModal'
 
 export const UserTable = () => {
     const { users: suppliers, status } = useSelector((state) => state.suppliers)
@@ -44,16 +42,12 @@ export const UserTable = () => {
         <>
             <TableContainer w={'70%'} minW={'60vw'}>
                 <Table colorScheme="purple" variant="striped">
-                    <TableCaption>Current Users on the app</TableCaption>
+                    <TableCaption>Current Suppliers on the app</TableCaption>
                     <Thead>
                         <Tr>
-                            <Th> User Id </Th>
+                            <Th> Supplier Id </Th>
                             <Th> name </Th>
-                            <Th> surname </Th>
-                            <Th> email </Th>
-                            <Th> Created At </Th>
-                            <Th> Role </Th>
-                            <Th> Actions </Th>
+                            <Th> country </Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -69,13 +63,9 @@ export const UserTable = () => {
                     </Tbody>
                     <Tfoot>
                         <Tr>
-                            <Th> User Id </Th>
+                            <Th> Supplier Id </Th>
                             <Th> name </Th>
-                            <Th> surname </Th>
-                            <Th> email </Th>
-                            <Th> Created At </Th>
-                            <Th> Role </Th>
-                            <Th> Actions </Th>
+                            <Th> country </Th>
                         </Tr>
                     </Tfoot>
                 </Table>
