@@ -93,9 +93,9 @@ const supplierSlice = createSlice({
             state.status = 'loading'
         })
 
-        .addCase(updateSupplier.fulfilled, (state,action)=>{
+        .addCase(updateSupplier.fulfilled, (state,)=>{
             state.status = 'succeded'
-            const payload = action.payload
+            state.status = 'idle'
         })
 
         .addCase(updateSupplier.rejected, (state, action)=>{

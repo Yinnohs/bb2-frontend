@@ -64,14 +64,12 @@ const priceReductionslice = createSlice({
         .addCase(fetchAllpriceReductions.fulfilled, (state,action)=>{
             state.status = 'succeded'
             const payload = action.payload
-            console.log({payload})
             state.priceReductions = payload
         })
 
         .addCase(fetchAllpriceReductions.rejected, (state, action)=>{
             state.status = 'rejected'
             state.error = action.error.message
-            console.log(action.error.message)
         })
         .addCase(createPriceReduction.pending, (state)=>{
             state.status = 'loading'
@@ -92,9 +90,9 @@ const priceReductionslice = createSlice({
             state.status = 'loading'
         })
 
-        .addCase(updatePriceReduction, (state,action)=>{
+        .addCase(updatePriceReduction, (state,)=>{
             state.status = 'succeded'
-            const payload = action.payload
+            state.status = 'idle'
         })
 
         .addCase(updatePriceReduction.rejected, (state, action)=>{

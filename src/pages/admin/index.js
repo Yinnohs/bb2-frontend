@@ -1,4 +1,4 @@
 export * from './AdminPanel'
-export * from './'
+export * from './users'
 export * from './'
 export * from './'
