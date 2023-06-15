@@ -2,10 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { baseUrl } from "../baseApi";
 import axios from "axios";
 
-const priceReductionsApi = axios.create({baseURL:`${baseUrl}/price-reduction/`})
-const priceReductionsAdminApi = axios.create({baseURL:`${baseUrl}/admin/priceReduction`})
+const priceReductionsApi = axios.create({baseURL:`${baseUrl}/price-reduction`})
+const priceReductionsAdminApi = axios.create({baseURL:`${baseUrl}/admin/discount`})
 
-export const fetchAllpriceReductions = createAsyncThunk('priceReductions/fetchAll', async ({rejectWithValue})=>{
+export const fetchAllpriceReductions = createAsyncThunk('priceReductions/fetchAll', async (_,{rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
         const {data} = await priceReductionsApi.get(`/all`,{
@@ -64,12 +64,14 @@ const priceReductionslice = createSlice({
         .addCase(fetchAllpriceReductions.fulfilled, (state,action)=>{
             state.status = 'succeded'
             const payload = action.payload
+            console.log({payload})
             state.priceReductions = payload
         })
 
         .addCase(fetchAllpriceReductions.rejected, (state, action)=>{
             state.status = 'rejected'
             state.error = action.error.message
+            console.log(action.error.message)
         })
         .addCase(createPriceReduction.pending, (state)=>{
             state.status = 'loading'

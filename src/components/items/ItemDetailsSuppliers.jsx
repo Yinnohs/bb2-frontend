@@ -2,7 +2,6 @@ import { Box, useColorModeValue, Text, List } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { SupplierSection } from './SupplierSection'
 export const ItemsDetailsSuppliers = ({ suppliers }) => {
-    console.log({ suppliers })
     return (
         <Box>
             <Text

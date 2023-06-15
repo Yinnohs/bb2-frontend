@@ -7,22 +7,25 @@ export const ItemDetailsPriceReductions = ({ priceReductions }) => {
         <Box>
             <Text
                 fontSize={{ base: '16px', lg: '18px' }}
-                color={useColorModeValue('purple.', 'purple.300')}
+                color={useColorModeValue('purple.500', 'purple.300')}
                 fontWeight={'500'}
                 textTransform={'uppercase'}
                 mb={'4'}
             >
                 Discount Applied
             </Text>
-            {priceReductions ??
+            {priceReductions?.length > 0 ? (
                 priceReductions.map((priceReduction, i) => {
                     return (
                         <PriceReductionSection
-                            supplier={priceReduction}
+                            priceReduction={priceReduction}
                             key={`price_reduction${i}`}
                         />
                     )
-                })}
+                })
+            ) : (
+                <></>
+            )}
         </Box>
     )
 }

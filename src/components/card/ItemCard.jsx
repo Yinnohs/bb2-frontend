@@ -11,6 +11,7 @@ import {
 
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
+import { ItemCardPriceSection } from './ItemCardPriceSection'
 
 export const ItemCard = ({ image = '/blackhole.webp', item }) => {
     const navigation = useNavigate()
@@ -97,21 +98,10 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                     >
                         {item?.item_state}
                     </Badge>
-                    <Stack direction={'row'} align={'center'}>
-                        <Text fontWeight={800} fontSize={'xl'}>
-                            {item?.price}€
-                        </Text>
-                        {item.price_reductions !== undefined ? (
-                            <Text
-                                textDecoration={'line-through'}
-                                color={'gray.600'}
-                            >
-                                {item?.price}€
-                            </Text>
-                        ) : (
-                            <></>
-                        )}
-                    </Stack>
+                    <ItemCardPriceSection
+                        price={item?.price}
+                        discounts={item?.price_reductions}
+                    />
                 </Stack>
             </Box>
         </Center>

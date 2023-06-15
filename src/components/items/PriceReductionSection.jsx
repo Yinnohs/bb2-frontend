@@ -14,7 +14,7 @@ export const PriceReductionSection = ({ priceReduction }) => {
                 <Text as={'span'} fontWeight={'bold'} mr={5}>
                     Discount until:
                 </Text>
-                {priceReduction.end_date}
+                {priceReduction?.end_date}
             </ListItem>
         </List>
     )

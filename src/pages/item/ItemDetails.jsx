@@ -55,6 +55,8 @@ export const ItemDetails = () => {
         setItem(item)
     }, [closeUpdate, closeDeactivate])
 
+    console.log(item?.price_reductions)
+
     return (
         <Container maxW={'7xl'} minH={'100vh'}>
             <SimpleGrid
@@ -143,9 +145,9 @@ export const ItemDetails = () => {
                             <></>
                         )}
 
-                        {item?.price_reductions.length > 0 ? (
+                        {item?.price_reductions?.length > 0 ? (
                             <ItemDetailsPriceReductions
-                                priceReductions={item?.priceReductions}
+                                priceReductions={item?.price_reductions}
                             />
                         ) : (
                             <></>
