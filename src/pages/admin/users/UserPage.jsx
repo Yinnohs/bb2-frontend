@@ -4,7 +4,7 @@ import { UserTable } from '../../../components/user/UserTable'
 export const UserPage = () => {
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
     return (
-        <Box minH={'100vh'} w={'100%'}>
+        <Box minH={'100vh'} w={'100%'} mt={20}>
             <Flex
                 direction={'column'}
                 w={'100%'}

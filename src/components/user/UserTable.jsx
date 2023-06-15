@@ -12,15 +12,17 @@ import {
 
 export const UserTable = () => {
     return (
-        <TableContainer>
-            <Table variant="simple">
+        <TableContainer w={'86%'}>
+            <Table colorScheme="purple" variant="striped">
                 <TableCaption>Current Users on the app</TableCaption>
                 <Thead>
                     <Tr>
-                        <Th isNumeric> User Id </Th>
+                        <Th> User Id </Th>
                         <Th> name </Th>
                         <Th> surname </Th>
                         <Th> email </Th>
+                        <Th> Created At </Th>
+                        <Th> Role </Th>
                     </Tr>
                 </Thead>
                 <Tbody>
