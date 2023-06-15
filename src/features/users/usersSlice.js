@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { baseUrl } from "../baseApi";
+import { registerRequest } from "../auth";
 
 const initialState = {
     users:[],
@@ -23,19 +24,6 @@ export const fetchAllUsers = createAsyncThunk('users/fetchAll', async (_,{reject
     }
 })
 
-export const createUser = createAsyncThunk('users/create', async (payload, {rejectWithValue})=>{
-    try {
-        const token = localStorage.getItem('at')
-        const {data} = await usersAdminApi.get(`/create`,
-        payload
-        ,{
-            headers:{Authorization:`Bearer ${token}`,
-        }})
-        return data
-    } catch (error) {
-        return rejectWithValue(error.message)
-    }
-})
 
 export const updateUser = createAsyncThunk('users/update', async (payload, {rejectWithValue})=>{
     try {
@@ -54,6 +42,11 @@ export const updateUser = createAsyncThunk('users/update', async (payload, {reje
 const userSlice = createSlice({
     name: "users",
     initialState,
+    reducers:{
+        changeStateToIdle(state){
+            state.status = 'idle'
+        }
+    },
     extraReducers(builder){
         builder
         .addCase(fetchAllUsers.pending, (state)=>{
@@ -70,6 +63,9 @@ const userSlice = createSlice({
             state.status = 'rejected'
             state.error = action.error.message
             
+        })
+        .addCase(registerRequest.fulfilled, (state,)=>{
+            state.status = 'idle'
         })
     }
 })

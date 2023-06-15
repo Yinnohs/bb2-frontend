@@ -8,14 +8,19 @@ import {
     Thead,
     Tr,
 } from '@chakra-ui/react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UserTableRowList } from './UserTableRowList'
 import { useEffect } from 'react'
+import { fetchAllUsers } from '../../features'
 
 export const UserTable = () => {
     const { users, status } = useSelector((state) => state.users)
-
-    useEffect(() => {}, [status])
+    const dispatch = useDispatch()
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchAllUsers())
+        }
+    }, [status, dispatch])
 
     return (
         <TableContainer w={'86%'}>

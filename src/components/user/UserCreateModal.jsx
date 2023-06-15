@@ -15,6 +15,7 @@ import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import { CustomAlert } from '../alert'
+import { UserCreateForm } from './userCreateForm'
 
 export const UserCreateModal = ({ isOpen, onClose }) => {
     const { status, error } = useSelector((state) => state.auth)
@@ -49,16 +50,18 @@ export const UserCreateModal = ({ isOpen, onClose }) => {
                 status,
                 error,
             )
+            onClose()
         },
     })
     return (
         <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Deactivate item</ModalHeader>
+                <ModalHeader>Create An User</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody pb={6}></ModalBody>
-
+                <ModalBody pb={6}>
+                    <UserCreateForm formik={formik} />
+                </ModalBody>
                 <ModalFooter>
                     <Button
                         colorScheme="purple"

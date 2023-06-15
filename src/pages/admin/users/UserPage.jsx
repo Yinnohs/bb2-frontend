@@ -1,24 +1,19 @@
 import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react'
 import { UserTable } from '../../../components/user/UserTable'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { fetchAllUsers } from '../../../features'
+import { useSelector } from 'react-redux'
 import { CustomAlert } from '../../../components/alert'
 import { UserCreateModal } from '../../../components/user/UserCreateModal'
 import { useModal } from '../../../hooks/modal/useModal'
+import { useEffect } from 'react'
 
 export const UserPage = () => {
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
-    const dispatch = useDispatch()
-    const { status, error } = useSelector((state) => state.users)
+
+    const { error } = useSelector((state) => state.users)
     const [isCreateModalOpen, openCreateUserModal, closeCreateModal] =
         useModal()
 
-    useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchAllUsers())
-        }
-    }, [status, dispatch])
+    useEffect(() => {}, [closeCreateModal])
     return (
         <Box minH={'100vh'} w={'100%'} mt={20}>
             <Flex

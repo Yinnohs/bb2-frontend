@@ -12,7 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { CreateUserForm } from '../../components/user'
+import { UserCreateForm } from '../../components/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { registerRequest } from '../../features/auth'
@@ -89,7 +89,7 @@ export const RegisterPage = () => {
                     p={8}
                 >
                     <Stack spacing={4}>
-                        <CreateUserForm formik={formik} />
+                        <UserCreateForm formik={formik} />
                         <Stack spacing={10} pt={2}>
                             <Button
                                 onClick={formik.submitForm}

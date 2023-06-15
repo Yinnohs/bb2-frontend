@@ -14,7 +14,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-export const CreateUserForm = ({ formik }) => {
+export const UserCreateForm = ({ formik }) => {
     const [showPassword, setShowPassword] = useState(false)
     return (
         <>
@@ -99,6 +99,6 @@ export const CreateUserForm = ({ formik }) => {
     )
 }
 
-CreateUserForm.propTypes = {
+UserCreateForm.propTypes = {
     formik: PropTypes.object,
 }
