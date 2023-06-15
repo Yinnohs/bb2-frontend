@@ -1,21 +1,44 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
-import {
-    Flex,
-    Box,
-    FormControl,
-    FormLabel,
-    Input,
-    Stack,
-    Link,
-    Button,
-    Heading,
-    Text,
-    useColorModeValue,
-} from '@chakra-ui/react'
+import { Flex, Stack, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { useFormik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+import { LoginRequest } from '../../features/auth'
+import { authenticateFunction } from '../../functions/auth'
+
+import { UserLoginForm } from '../../components/user'
+import { useEffect, useId } from 'react'
 
 export const LoginPage = () => {
     const navigation = useNavigate()
+    const { token, status, error } = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
+    const isLoading = status === 'loading'
+
+    const formik = useFormik({
+        initialValues: {
+            password: '',
+            email: '',
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .required('email required')
+                .email('not valid email'),
+            password: Yup.string().required('password required'),
+        }),
+        onSubmit: async (values, actions) => {
+            authenticateFunction(values, actions, dispatch, LoginRequest)
+        },
+    })
+
+    useEffect(() => {
+        if (token !== null && token !== '') {
+            navigation('/items')
+        }
+    }, [token])
+
     return (
         <Flex
             minH={'100vh'}
@@ -30,49 +53,12 @@ export const LoginPage = () => {
                         To purchase items across the galaxy 🌌
                     </Text>
                 </Stack>
-                <Box
-                    rounded={'lg'}
-                    bg={useColorModeValue('white', 'gray.700')}
-                    boxShadow={'lg'}
-                    p={8}
-                >
-                    <Stack spacing={4}>
-                        <FormControl id="email">
-                            <FormLabel>Email address</FormLabel>
-                            <Input type="email" />
-                        </FormControl>
-                        <FormControl id="password">
-                            <FormLabel>Password</FormLabel>
-                            <Input type="password" />
-                        </FormControl>
-                        <Stack spacing={10}>
-                            <Stack
-                                direction={{ base: 'column', sm: 'row' }}
-                                align={'start'}
-                                justify={'space-between'}
-                            >
-                                <Text color={useColorModeValue('gray.500')}>
-                                    don't have an account?{' '}
-                                    <Link
-                                        color={'purple.400'}
-                                        onClick={() => navigation('/register')}
-                                    >
-                                        Register
-                                    </Link>
-                                </Text>
-                            </Stack>
-                            <Button
-                                bg={'purple.400'}
-                                color={'white'}
-                                _hover={{
-                                    bg: 'purple.500',
-                                }}
-                            >
-                                Sign in
-                            </Button>
-                        </Stack>
-                    </Stack>
-                </Box>
+                <UserLoginForm
+                    key={useId()}
+                    formik={formik}
+                    isButtonDisabled={isLoading}
+                    error={error}
+                />
             </Stack>
         </Flex>
     )

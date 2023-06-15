@@ -10,11 +10,15 @@ import {
 } from '@chakra-ui/react'
 
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
+import { ItemCardPriceSection } from './ItemCardPriceSection'
 
 export const ItemCard = ({ image = '/blackhole.webp', item }) => {
+    const navigation = useNavigate()
     return (
         <Center py={12}>
             <Box
+                onClick={() => navigation(`/items/details/${item.item_id}`)}
                 role={'group'}
                 p={6}
                 maxW={'330px'}
@@ -24,6 +28,9 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                 rounded={'lg'}
                 pos={'relative'}
                 zIndex={1}
+                _hover={{
+                    cursor: 'pointer',
+                }}
             >
                 <Box
                     rounded={'lg'}
@@ -63,14 +70,13 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                         textTransform={'uppercase'}
                     >
                         {item?.code}
-                        12
                     </Text>
                     <Heading
                         fontSize={'xl'}
                         fontFamily={'body'}
                         fontWeight={500}
                     >
-                        {item?.description}A brief Description
+                        {item?.description}
                     </Heading>
                     <Stack direction={'row'} align={'center'}>
                         <Text
@@ -79,35 +85,23 @@ export const ItemCard = ({ image = '/blackhole.webp', item }) => {
                             fontWeight={'bold'}
                             textTransform={'uppercase'}
                         >
-                            {/* {`${item?.creator?.name} ${item?.creator?.surname}`} */}
-                            Jose I Soto
-                        </Text>
-                        <Badge
-                            fontSize={'sm'}
-                            borderRadius={5}
-                            textColor={'purple.400'}
-                            backgroundColor={useColorModeValue(
-                                'white',
-                                'gray.800'
-                            )}
-                            border={'1px'}
-                            borderColor={'purple.400'}
-                        >
-                            {item?.status}
-                            Active
-                        </Badge>
-                    </Stack>
-                    <Stack direction={'row'} align={'center'}>
-                        <Text fontWeight={800} fontSize={'xl'}>
-                            {item?.price} 12€
-                        </Text>
-                        <Text
-                            textDecoration={'line-through'}
-                            color={'gray.600'}
-                        >
-                            {item?.price} 22€
+                            {`${item?.creator?.name} ${item?.creator?.surname}`}
                         </Text>
                     </Stack>
+                    <Badge
+                        fontSize={'sm'}
+                        borderRadius={5}
+                        textColor={'purple.400'}
+                        backgroundColor={useColorModeValue('white', 'gray.800')}
+                        border={'1px'}
+                        borderColor={'purple.400'}
+                    >
+                        {item?.item_state}
+                    </Badge>
+                    <ItemCardPriceSection
+                        price={item?.price}
+                        discounts={item?.price_reductions}
+                    />
                 </Stack>
             </Box>
         </Center>

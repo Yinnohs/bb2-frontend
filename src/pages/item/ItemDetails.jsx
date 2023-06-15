@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
     Box,
     Container,
@@ -11,22 +12,59 @@ import {
     SimpleGrid,
     StackDivider,
     useColorModeValue,
-    List,
-    ListItem,
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
-import {} from '@chakra-ui/icons'
+import { useSelector } from 'react-redux'
+import { selectAllItems } from '../../features/items/itemsSlice'
+import {
+    ItemDetailsPriceReductions,
+    ItemsDetailsSuppliers,
+} from '../../components/items'
+import { DeactivateItemModal } from '../../components/items/DeactivateItemModal'
+import { useEffect, useState } from 'react'
+import { UpdateItemModal } from '../../components/items/UpdateItemModal'
 
 export const ItemDetails = () => {
     const { id } = useParams()
+    const itemId = parseInt(id, 10)
+    const items = useSelector(selectAllItems)
+    const [item, setItem] = useState(
+        items.find((item) => item.item_id === itemId),
+    )
+    const [isUpdateOpen, setUpdateOpen] = useState(false)
+    const [isDeactivateOpen, setDeactivateOpen] = useState(false)
+
+    const openUpdate = () => {
+        setUpdateOpen(true)
+    }
+
+    const closeUpdate = () => {
+        setUpdateOpen(false)
+    }
+
+    const openDeactivate = () => {
+        setDeactivateOpen(true)
+    }
+
+    const closeDeactivate = () => {
+        setDeactivateOpen(false)
+    }
+
+    useEffect(() => {
+        const item = items.find((item) => item.item_id === itemId)
+        setItem(item)
+    }, [closeUpdate, closeDeactivate])
+
+    console.log(item?.price_reductions)
+
     return (
-        <Container maxW={'7xl'}>
+        <Container maxW={'7xl'} minH={'100vh'}>
             <SimpleGrid
                 columns={{ base: 1, lg: 2 }}
                 spacing={{ base: 8, md: 20 }}
                 py={{ base: 18, md: 24 }}
             >
-                <Flex>
+                <Flex direction={'column'} align={'center'}>
                     <Image
                         rounded={'md'}
                         alt={'product image'}
@@ -36,6 +74,24 @@ export const ItemDetails = () => {
                         w={'100%'}
                         h={{ base: '100%', sm: '400px', lg: '500px' }}
                     />
+                    <Button
+                        rounded={'sm'}
+                        w={'50%'}
+                        mt={8}
+                        size={'sm'}
+                        py={'2'}
+                        bg={useColorModeValue('purple.900', 'purple.100')}
+                        color={useColorModeValue('white', 'purple.900')}
+                        textTransform={'uppercase'}
+                        _hover={{
+                            transform: 'translateY(2px)',
+                            boxShadow: 'lg',
+                        }}
+                        onClick={openDeactivate}
+                        disabled={item?.item_state !== 'Active'}
+                    >
+                        Deactivate Item
+                    </Button>
                 </Flex>
                 <Stack spacing={{ base: 6, md: 12 }}>
                     <Box as={'header'}>
@@ -44,14 +100,14 @@ export const ItemDetails = () => {
                             fontWeight={600}
                             fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
                         >
-                            Andromeda black hole
+                            {item?.description}
                         </Heading>
                         <Text
                             color={useColorModeValue('gray.900', 'gray.400')}
                             fontWeight={300}
                             fontSize={'2xl'}
                         >
-                            350.00 €
+                            {item?.price} €
                         </Text>
                     </Box>
 
@@ -62,7 +118,7 @@ export const ItemDetails = () => {
                             <StackDivider
                                 borderColor={useColorModeValue(
                                     'gray.200',
-                                    'gray.600'
+                                    'gray.600',
                                 )}
                             />
                         }
@@ -71,121 +127,31 @@ export const ItemDetails = () => {
                             <Text
                                 color={useColorModeValue(
                                     'gray.500',
-                                    'gray.400'
+                                    'gray.400',
                                 )}
                                 fontSize={'2xl'}
                                 fontWeight={'300'}
                             >
-                                Just another black hole in the system
+                                {item?.item_state}
                             </Text>
-                            <Text fontSize={'lg'}>
-                                This black hole is near the block B023-G078 just
-                                a random mind weight black hole
-                            </Text>
+                            <Text fontSize={'lg'}>{item?.code}</Text>
                         </VStack>
-                        <Box>
-                            <Text
-                                fontSize={{ base: '16px', lg: '18px' }}
-                                color={useColorModeValue(
-                                    'purple.500',
-                                    'purple.300'
-                                )}
-                                fontWeight={'500'}
-                                textTransform={'uppercase'}
-                                mb={'4'}
-                            >
-                                Features
-                            </Text>
 
-                            <SimpleGrid
-                                columns={{ base: 1, md: 2 }}
-                                spacing={10}
-                            >
-                                <List spacing={2}>
-                                    <ListItem>
-                                        Mid higclass mass density
-                                    </ListItem>
-                                    <ListItem>High enrgy emitted</ListItem>
-                                    <ListItem>
-                                        Good for creating white smurfs
-                                    </ListItem>
-                                </List>
-                            </SimpleGrid>
-                        </Box>
-                        <Box>
-                            <Text
-                                fontSize={{ base: '16px', lg: '18px' }}
-                                color={useColorModeValue(
-                                    'purple.',
-                                    'purple.300'
-                                )}
-                                fontWeight={'500'}
-                                textTransform={'uppercase'}
-                                mb={'4'}
-                            >
-                                Supplier Details
-                            </Text>
+                        {item?.suppliers.length > 0 ? (
+                            <ItemsDetailsSuppliers
+                                suppliers={item?.suppliers}
+                            />
+                        ) : (
+                            <></>
+                        )}
 
-                            <List spacing={2}>
-                                <ListItem>
-                                    <Text
-                                        as={'span'}
-                                        fontWeight={'bold'}
-                                        mr={5}
-                                    >
-                                        Name:
-                                    </Text>
-                                    Black holes andromeda A.S.
-                                </ListItem>
-                                <ListItem>
-                                    <Text
-                                        as={'span'}
-                                        fontWeight={'bold'}
-                                        mr={5}
-                                    >
-                                        Country:
-                                    </Text>
-                                    Spain
-                                </ListItem>
-                            </List>
-                        </Box>
-                        <Box>
-                            <Text
-                                fontSize={{ base: '16px', lg: '18px' }}
-                                color={useColorModeValue(
-                                    'purple.',
-                                    'purple.300'
-                                )}
-                                fontWeight={'500'}
-                                textTransform={'uppercase'}
-                                mb={'4'}
-                            >
-                                Discount Applied
-                            </Text>
-
-                            <List spacing={2}>
-                                <ListItem>
-                                    <Text
-                                        as={'span'}
-                                        fontWeight={'bold'}
-                                        mr={5}
-                                    >
-                                        Discount applied:
-                                    </Text>
-                                    20%
-                                </ListItem>
-                                <ListItem>
-                                    <Text
-                                        as={'span'}
-                                        fontWeight={'bold'}
-                                        mr={5}
-                                    >
-                                        Discount until:
-                                    </Text>
-                                    20/10/2555
-                                </ListItem>
-                            </List>
-                        </Box>
+                        {item?.price_reductions?.length > 0 ? (
+                            <ItemDetailsPriceReductions
+                                priceReductions={item?.price_reductions}
+                            />
+                        ) : (
+                            <></>
+                        )}
                     </Stack>
 
                     <Button
@@ -201,8 +167,9 @@ export const ItemDetails = () => {
                             transform: 'translateY(2px)',
                             boxShadow: 'lg',
                         }}
+                        onClick={openUpdate}
                     >
-                        Add to cart
+                        Update Item
                     </Button>
 
                     <Stack
@@ -210,9 +177,23 @@ export const ItemDetails = () => {
                         alignItems="center"
                         justifyContent={'center'}
                     >
-                        <Text> Created by : Jose I soto </Text>
+                        <Text>
+                            {' '}
+                            Created by :{' '}
+                            {` ${item?.creator?.name} ${item?.creator?.surname}`}
+                        </Text>
                     </Stack>
                 </Stack>
+                <DeactivateItemModal
+                    isOpen={isDeactivateOpen}
+                    onClose={closeDeactivate}
+                    itemId={itemId}
+                />
+                <UpdateItemModal
+                    item={item}
+                    isOpen={isUpdateOpen}
+                    onClose={closeUpdate}
+                />
             </SimpleGrid>
         </Container>
     )

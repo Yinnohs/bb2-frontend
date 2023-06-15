@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react'
+import { useEffect } from 'react'
 import {
     Box,
     Button,
@@ -7,14 +7,46 @@ import {
     Grid,
     Select,
     useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react'
-import { itemListMockups } from '../../mock/Items'
 import { ItemCard } from '../../components/card'
+import { ItemModal } from '../../components/items'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    selectAllItems,
+    selectItemStatus,
+    fetchAllItems,
+} from '../../features/items/itemsSlice'
+import { fetchAllpriceReductions } from '../../features/price-reductions/priceReductionSlice'
+import { fetchAllsuppliers, selectAllSuppliers } from '../../features'
 
 export const ItemListPage = () => {
+    const dispatch = useDispatch()
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
-    const [items, setItems] = useState(itemListMockups)
-    const [isLoading, setIsLoading] = useState(true)
+    const items = useSelector(selectAllItems)
+    const itemsStatus = useSelector(selectItemStatus)
+    const { suppliers } = useSelector(selectAllSuppliers)
+
+    const { isOpen, onClose, onOpen } = useDisclosure()
+
+    const handleFilterByState = (event) => {
+        dispatch(fetchAllItems(event.target.value))
+    }
+
+    const initApp = (dispatch) => {
+        Promise.all([
+            dispatch(fetchAllItems()),
+            dispatch(fetchAllpriceReductions()),
+            dispatch(fetchAllsuppliers()),
+        ])
+    }
+
+    useEffect(() => {
+        if (itemsStatus === 'idle') {
+            initApp(dispatch)
+        }
+    }, [itemsStatus, items, dispatch])
+
     return (
         <Box w={'100%'} minH={'100%'}>
             <Flex w={'100%'} minH={'100%'} direction={'column'}>
@@ -25,6 +57,7 @@ export const ItemListPage = () => {
                     align={'center'}
                 >
                     <Button
+                        onClick={onOpen}
                         color={textBorderValue}
                         borderColor={textBorderValue}
                         border={'1px'}
@@ -46,20 +79,21 @@ export const ItemListPage = () => {
                         maxWidth={'30%'}
                         backgroundColor={useColorModeValue(
                             'none',
-                            'blackAlpha.500'
+                            'blackAlpha.500',
                         )}
                         color={textBorderValue}
                         borderColor={textBorderValue}
+                        onChange={handleFilterByState}
                     >
-                        <option value="ACTIVE">Active</option>
-                        <option value="INACTIVE">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Discontinued">Discontinued</option>
                     </Select>
                     <Grid
+                        mt={20}
                         width={'80%'}
                         templateColumns={'repeat(3, 1fr)'}
                         gap={6}
                         scrollBehavior={'smooth'}
-                        scroll
                     >
                         {items.length > 0 ? (
                             items.map((item, i) => {
@@ -71,6 +105,7 @@ export const ItemListPage = () => {
                     </Grid>
                 </Flex>
             </Flex>
+            <ItemModal isOpen={isOpen} onClose={onClose} />
         </Box>
     )
 }
