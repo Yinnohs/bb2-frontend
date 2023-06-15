@@ -91,16 +91,16 @@ const supplierSlice = createSlice({
                 state.error = action.error.message
             })
 
-            .addCase(updateSupplier.pending, (state) => {
+            .addCase(updateSupplierRequest.pending, (state) => {
                 state.status = 'loading'
             })
 
-            .addCase(updateSupplier.fulfilled, (state) => {
+            .addCase(updateSupplierRequest.fulfilled, (state) => {
                 state.status = 'succeded'
                 state.status = 'idle'
             })
 
-            .addCase(updateSupplier.rejected, (state, action) => {
+            .addCase(updateSupplierRequest.rejected, (state, action) => {
                 state.status = 'rejected'
                 state.error = action.error.message
             })
