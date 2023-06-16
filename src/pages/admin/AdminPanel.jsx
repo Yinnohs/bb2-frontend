@@ -18,7 +18,6 @@ export const AdminPanel = () => {
                 <AdminSelectionCard label={'Suppliers'} url={'/suppliers/'} />
                 <AdminSelectionCard label={'Discounts'} url={'/discounts/'} />
                 <AdminSelectionCard label={'Users'} url={'/users/'} />
-                <AdminSelectionCard label={'Items'} url={'/items/'} />
             </Grid>
         </Box>
     )
