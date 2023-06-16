@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { CustomAlert } from '../../../components/alert'
 import { useModal } from '../../../hooks/modal/useModal'
 import { useEffect } from 'react'
+import { PriceReductionCreateModal } from '../../../components/price-reductions'
 
 export const PriceReductionsPage = () => {
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
@@ -40,6 +41,10 @@ export const PriceReductionsPage = () => {
                     <></>
                 )}
             </Flex>
+            <PriceReductionCreateModal
+                isOpen={isCreateModalOpen}
+                onClose={closeCreateModal}
+            />
         </Box>
     )
 }

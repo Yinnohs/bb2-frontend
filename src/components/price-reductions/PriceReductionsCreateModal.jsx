@@ -29,10 +29,7 @@ export const PriceReductionCreateModal = ({ isOpen, onClose }) => {
         validationSchema: Yup.object({
             reduced_price: Yup.number()
                 .required('reduced price required')
-                .min(
-                    4,
-                    'The name field should have at least 4 characters long',
-                ),
+                .max(1, 'cannot be higher than 1'),
         }),
         onSubmit: async (values, actions) => {
             authenticateFunction(
