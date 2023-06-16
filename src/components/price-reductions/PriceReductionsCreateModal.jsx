@@ -15,7 +15,7 @@ import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import { CustomAlert } from '../alert'
-import { SupplierForm } from './SupplierForm'
+import { PriceReductionForm } from './PriceReductionForm'
 
 export const PriceReductionCreateModal = ({ isOpen, onClose }) => {
     const { status, error } = useSelector((state) => state.suppliers)
@@ -53,7 +53,7 @@ export const PriceReductionCreateModal = ({ isOpen, onClose }) => {
                 <ModalHeader>Create A Discount</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
-                    <SupplierForm formik={formik} />
+                    <PriceReductionForm formik={formik} />
                 </ModalBody>
                 <ModalFooter>
                     <Button
