@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
     Box,
@@ -17,14 +18,18 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectAllItems } from '../../features/items/itemsSlice'
 import {
+    DeleteItemModal,
     ItemDetailsPriceReductions,
     ItemsDetailsSuppliers,
 } from '../../components/items'
 import { DeactivateItemModal } from '../../components/items/DeactivateItemModal'
 import { useEffect, useState } from 'react'
 import { UpdateItemModal } from '../../components/items/UpdateItemModal'
+import { useModal } from '../../hooks/modal/useModal'
+import { getCurrentUser } from '../../features'
 
 export const ItemDetails = () => {
+    const currentUser = useSelector(getCurrentUser)
     const { id } = useParams()
     const itemId = parseInt(id, 10)
     const items = useSelector(selectAllItems)
@@ -33,6 +38,7 @@ export const ItemDetails = () => {
     )
     const [isUpdateOpen, setUpdateOpen] = useState(false)
     const [isDeactivateOpen, setDeactivateOpen] = useState(false)
+    const [isDeleteModalOpen, openDeleteModal, closeDeleteModal] = useModal()
 
     const openUpdate = () => {
         setUpdateOpen(true)
@@ -90,6 +96,29 @@ export const ItemDetails = () => {
                     >
                         Deactivate Item
                     </Button>
+
+                    {currentUser?.roles[0]?.role === 'ADMIN' ? (
+                        <Button
+                            rounded={'sm'}
+                            w={'50%'}
+                            mt={8}
+                            size={'sm'}
+                            py={'2'}
+                            bg={useColorModeValue('purple.900', 'purple.100')}
+                            color={useColorModeValue('white', 'purple.900')}
+                            textTransform={'uppercase'}
+                            _hover={{
+                                transform: 'translateY(2px)',
+                                boxShadow: 'lg',
+                            }}
+                            onClick={openDeleteModal}
+                            disabled={item?.item_state !== 'Active'}
+                        >
+                            Delete Item
+                        </Button>
+                    ) : (
+                        <></>
+                    )}
                 </Flex>
                 <Stack spacing={{ base: 6, md: 12 }}>
                     <Box as={'header'}>
@@ -176,8 +205,7 @@ export const ItemDetails = () => {
                         justifyContent={'center'}
                     >
                         <Text>
-                            {' '}
-                            Created by :{' '}
+                            Created by :
                             {` ${item?.creator?.name} ${item?.creator?.surname}`}
                         </Text>
                     </Stack>
@@ -191,6 +219,11 @@ export const ItemDetails = () => {
                     item={item}
                     isOpen={isUpdateOpen}
                     onClose={closeUpdate}
+                />
+                <DeleteItemModal
+                    itemId={item?.item_id}
+                    isOpen={isDeleteModalOpen}
+                    onClose={closeDeleteModal}
                 />
             </SimpleGrid>
         </Container>

@@ -3,6 +3,7 @@ import { baseUrl } from "../baseApi"
 import axios from "axios"
 
 const itemsAPi = axios.create({baseURL:`${baseUrl}/item`})
+const itemsAdminApi = axios.create({baseURL:`${baseUrl}/admin/item`})
 
 
 export const fetchAllItems = createAsyncThunk('items/fetch', async (state, {rejectWithValue})=>{
@@ -21,6 +22,18 @@ export const createItem = createAsyncThunk('items/create', async (payload, {reje
     try {
         const token = localStorage.getItem('at')
         const {data} = await itemsAPi.post(`/create`, payload ,{
+            headers:{Authorization:`Bearer ${token}`,
+        }})
+        return data
+    } catch (error) {
+        return rejectWithValue(error.message)
+    }
+})
+
+export const deleteItemRequest = createAsyncThunk('items/delete', async (payload, {rejectWithValue})=>{
+    try {
+        const token = localStorage.getItem('at')
+        const {data} = await itemsAdminApi.delete(`/delete/${payload}`, payload ,{
             headers:{Authorization:`Bearer ${token}`,
         }})
         return data
@@ -179,6 +192,20 @@ const itemSlice = createSlice({
         })
 
         .addCase(updateItem.rejected, (state, action)=>{
+            state.status = 'rejected'
+            state.error = action.error.message
+        })
+
+        .addCase(deleteItemRequest.pending, (state)=>{
+            state.status = 'loading'
+        })
+
+        .addCase(deleteItemRequest.fulfilled, (state)=>{
+            state.status = 'succeded'
+            state.status = 'idle'
+        })
+
+        .addCase(deleteItemRequest.rejected, (state, action)=>{
             state.status = 'rejected'
             state.error = action.error.message
         })
