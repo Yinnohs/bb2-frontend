@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types'
 import { PriceReductionTableRow } from './PriceReductionsTableRow'
 export const PriceReductionsTableRowList = ({
-    suppliers,
+    priceReductions,
     openDeleteModal,
     openUpdateModal,
 }) => {
     return (
         <>
-            {suppliers.map((supplier, index) => {
+            {priceReductions.map((priceReduction, index) => {
                 return (
                     <PriceReductionTableRow
-                        key={supplier?.name + `${index}`}
-                        supplier={supplier}
+                        key={priceReduction?.reduced_price + `${index}`}
+                        supplier={priceReduction}
                         openDeleteModal={openDeleteModal}
                         openUpdateModal={openUpdateModal}
                     />
@@ -21,7 +21,7 @@ export const PriceReductionsTableRowList = ({
     )
 }
 PriceReductionsTableRowList.propTypes = {
-    suppliers: PropTypes.array,
+    priceReductions: PropTypes.array,
     openDeleteModal: PropTypes.func,
     openUpdateModal: PropTypes.func,
 }
