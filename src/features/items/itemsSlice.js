@@ -30,7 +30,7 @@ export const createItem = createAsyncThunk('items/create', async (payload, {reje
     }
 })
 
-export const deleteItemRequest = createAsyncThunk('items/create', async (payload, {rejectWithValue})=>{
+export const deleteItemRequest = createAsyncThunk('items/delete', async (payload, {rejectWithValue})=>{
     try {
         const token = localStorage.getItem('at')
         const {data} = await itemsAdminApi.delete(`/delete/${payload}`, payload ,{
@@ -205,7 +205,7 @@ const itemSlice = createSlice({
             state.status = 'idle'
         })
 
-        .addCase(fetchAllItems.rejected, (state, action)=>{
+        .addCase(deleteItemRequest.rejected, (state, action)=>{
             state.status = 'rejected'
             state.error = action.error.message
         })
