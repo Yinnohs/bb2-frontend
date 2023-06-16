@@ -8,7 +8,12 @@ import {
     ItemListPage,
     ItemDetails,
 } from '../pages'
-import { AdminPanel, SupplierPage, UserPage } from '../pages/admin'
+import {
+    AdminPanel,
+    SupplierPage,
+    UserPage,
+    PriceReductionsPage,
+} from '../pages/admin'
 
 export const Router = () => {
     return (
@@ -26,6 +31,10 @@ export const Router = () => {
                     />
                     <Route path="/admin" element={<AdminPanel />} />
                     <Route path="/admin/users/" element={<UserPage />} />
+                    <Route
+                        path="/admin/discounts/"
+                        element={<PriceReductionsPage />}
+                    />
                     <Route
                         path="/admin/suppliers/"
                         element={<SupplierPage />}
