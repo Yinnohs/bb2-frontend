@@ -3,7 +3,10 @@ import { useSelector } from 'react-redux'
 import { CustomAlert } from '../../../components/alert'
 import { useModal } from '../../../hooks/modal/useModal'
 import { useEffect } from 'react'
-import { PriceReductionCreateModal } from '../../../components/price-reductions'
+import {
+    PriceReductionCreateModal,
+    PriceReductionsTable,
+} from '../../../components/price-reductions'
 
 export const PriceReductionsPage = () => {
     const textBorderValue = useColorModeValue('purple.500', 'purple.200')
@@ -29,7 +32,7 @@ export const PriceReductionsPage = () => {
                 >
                     Create a PriceReductions + 1
                 </Button>
-
+                <PriceReductionsTable />
                 {error !== null ? (
                     <CustomAlert
                         label={'OH no!'}

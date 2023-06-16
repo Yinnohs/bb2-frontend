@@ -3,7 +3,6 @@ import { PriceReductionTableRow } from './PriceReductionsTableRow'
 export const PriceReductionsTableRowList = ({
     priceReductions,
     openDeleteModal,
-    openUpdateModal,
 }) => {
     return (
         <>
@@ -11,9 +10,8 @@ export const PriceReductionsTableRowList = ({
                 return (
                     <PriceReductionTableRow
                         key={priceReduction?.reduced_price + `${index}`}
-                        supplier={priceReduction}
+                        priceReduction={priceReduction}
                         openDeleteModal={openDeleteModal}
-                        openUpdateModal={openUpdateModal}
                     />
                 )
             })}
@@ -23,5 +21,4 @@ export const PriceReductionsTableRowList = ({
 PriceReductionsTableRowList.propTypes = {
     priceReductions: PropTypes.array,
     openDeleteModal: PropTypes.func,
-    openUpdateModal: PropTypes.func,
 }
