@@ -11,10 +11,7 @@ import {
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-    deletePriceReductionRequest,
-    deleteSupplierRequest,
-} from '../../features'
+import { deletePriceReductionRequest } from '../../features'
 import { CustomAlert } from '../alert'
 
 export const PriceReductionDeleteModal = ({
