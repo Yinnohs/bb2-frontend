@@ -35,8 +35,6 @@ export const PriceReductionsTable = () => {
         }
     }, [status, dispatch])
 
-    console.log({ priceReductions })
-
     return (
         <>
             <TableContainer w={'70%'} minW={'60vw'}>

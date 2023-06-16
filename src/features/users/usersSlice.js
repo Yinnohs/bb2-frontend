@@ -106,13 +106,13 @@ const userSlice = createSlice({
             .addCase(updateUserRequest.fulfilled, (state) => {
                 state.status = 'succeded'
                 state.status = 'idle'
-                console.log('updated')
+                
             })
 
             .addCase(updateUserRequest.rejected, (state, action) => {
                 state.status = 'rejected'
                 state.error = action.error.message
-                console.log(action.error.message)
+               
             })
     },
 })

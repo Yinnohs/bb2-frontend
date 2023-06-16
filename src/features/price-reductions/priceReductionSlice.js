@@ -67,7 +67,7 @@ export const deletePriceReductionRequest = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             const token = localStorage.getItem('at')
-            const { data } = await priceReductionsAdminApi.put(
+            const { data } = await priceReductionsAdminApi.delete(
                 `/delete/${payload}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
